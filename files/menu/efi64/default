@@ -1,0 +1,3 @@
+INCLUDE pxelinux.cfg/default.theme
+MENU TITLE PXE MENU
+INCLUDE pxelinux.cfg/default.entries

@@ -1,0 +1,17 @@
+# LABEL boot from local disk
+#   MENU DEFAULT
+#   LOCALBOOT -1
+#   TIMEOUT 100
+
+LABEL boot from local disk
+  MENU DEFAULT
+  COM32 chain.c32
+  APPEND hd0
+  TIMEOUT 100
+
+MENU SEPARATOR
+
+LABEL reboot
+  KERNEL reboot.c32
+LABEL shutdown
+  KERNEL poweroff.c32

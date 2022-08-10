@@ -1,0 +1,67 @@
+DEFAULT vesamenu.c32
+SERIAL 0 115200
+
+MENU vshift 8
+# MENU rows 18
+# MENU margin 8
+# MENU hidden
+# MENU helpmsgrow 15
+# MENU tabmsgrow 13
+MENU tabmsg Press ENTER to boot or TAB to edit a menu entry
+MENU RESOLUTION 1024 768
+MENU BACKGROUND splash.png
+MENU CLEAR
+
+PROMPT 0         # Pas de prompt
+NOESCAPE 1       # Unactivate escape keyboard
+ALLOWOPTIONS 1   # disallow options
+
+# MENU COLOR screen      0  #80ffffff #00000000 std      # background colour not covered by the splash image
+# MENU COLOR border      0  #ffff0000 #ee000000 std      # the wire-frame border
+# MENU COLOR title       1  #ffff0000 #ee000000 std      # menu title text
+# MENU COLOR sel         1  #ffff0000 #ee000000 std      # selected menu option
+# MENU COLOR hotsel      0  #ff7f7fff #ee000000 std      # the selected hotkey (set with ^ in menu label)
+# MENU COLOR unsel       0  #ffffffff #ee000000 std      # unselected menu options
+# MENU COLOR hotkey      0  #ff7f7fff #ee000000 std      # unselected hotkeys (set with ^ in menu label)
+# MENU COLOR tabmsg      0  #c07f7fff #00000000 std      # tab text
+# MENU COLOR timeout_msg 1  #ffff0000 #00000000 std      # timout text
+# MENU COLOR timeout     1  #ffff0000 #00000000 std      # timout counter
+# MENU COLOR disabled    0  #807f7f7f #ee000000 std      # disabled menu options, including separators
+# MENU COLOR cmdmark     0  #c000ffff #ee000000 std      # command line marker - the '> ' on the left when editing an option
+# MENU COLOR cmdline     0  #c0ffffff #ee000000 std      # command line - the text being edited
+# # options below haven't been tested, descriptions may be lacking.
+# MENU COLOR scrollbar   0  #40000000 #00000000 std      # scroll bar
+# MENU COLOR pwdborder   0  #80ffffff #20ffffff std      # password box wire-frame border
+# MENU COLOR pwdheader   0  #80ff8080 #20ffffff std      # password box header
+# MENU COLOR pwdentry    0  #80ffffff #20ffffff std      # password entry field
+# MENU COLOR help        0  #c0ffffff #00000000 std      # help text, if set via 'text help ... endtext'
+
+
+
+# Clear the screen when exiting the menu, instead of leaving the menu displayed.
+# For vesamenu, this means the graphical background is still displayed without
+# the menu itself for as long as the screen remains in graphics mode.
+# Border Area
+MENU COLOR border * #00000000 #00000000 none
+# Selected item
+MENU COLOR sel 0 #ffffffff #00000000 none
+# Title bar
+MENU COLOR title 0 #ff7ba3d0 #00000000 none
+# Press [Tab] message
+MENU COLOR tabmsg 0 #ff3a6496 #00000000 none
+# Unselected menu item
+MENU COLOR unsel 0 #84b8ffff #00000000 none
+# Selected hotkey
+MENU COLOR hotsel 0 #84b8ffff #00000000 none
+# Unselected hotkey
+MENU COLOR hotkey 0 #ffffffff #00000000 none
+# Help text
+MENU COLOR help 0 #ffffffff #00000000 none
+# A scrollbar of some type? Not sure.
+MENU COLOR scrollbar 0 #ffffffff #ff355594 none
+# Timeout msg
+MENU COLOR timeout 0 #ffffffff #00000000 none
+MENU COLOR timeout_msg 0 #ffffffff #00000000 none
+# Command prompt text
+MENU COLOR cmdmark 0 #84b8ffff #00000000 none
+MENU COLOR cmdline 0 #ffffffff #00000000 none
