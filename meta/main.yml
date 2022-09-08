@@ -1,10 +1,12 @@
 ---
+
 galaxy_info:
-  author: dginhoux
+  role_name: ginhouxnet.pxe_sysprep
   description: create kickstart, preseed and pxe menu for os installation
+  author: dginhoux
   company: ginhouxnet
-  license: MIT
-  min_ansible_version: 2.12
+  license: BSD
+  min_ansible_version: "2.12"
   platforms:
     - name: Debian
       versions:
@@ -12,22 +14,19 @@ galaxy_info:
         - bullseye
     - name: Fedora
       versions:
-        - 33
-        - 34
-        - 35
-        - 36
-        - 37
-    - name: CentOS
-      versions:
-        - 7
-        - 8
+        - "33"
+        - "34"
+        - "35"
+        - "36"
     - name: EL
       versions:
-        - 7
-        - 8
+        - "7"
+        - "8"
   galaxy_tags:
     - pxe
     - sysprep
     - kickstart
     - preseed
-  dependencies: []
+
+
+dependencies: []
