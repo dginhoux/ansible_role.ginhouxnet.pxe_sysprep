@@ -1,7 +1,7 @@
 ---
 
 galaxy_info:
-  role_name: ginhouxnet.pxe_sysprep
+  role_name: pxe_sysprep
   description: create kickstart, preseed and pxe menu for os installation
   author: dginhoux
   company: ginhouxnet
