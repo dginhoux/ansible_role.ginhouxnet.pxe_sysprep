@@ -1,5 +1,4 @@
 ---
-
 galaxy_info:
   role_name: pxe_sysprep
   description: create kickstart, preseed and pxe menu for os installation
@@ -27,6 +26,5 @@ galaxy_info:
     - sysprep
     - kickstart
     - preseed
-
 
 dependencies: []

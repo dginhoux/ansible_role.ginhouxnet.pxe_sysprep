@@ -36,7 +36,6 @@
       loop_control:
         loop_var: server
 
-
     - name: copy default pxe menu efi64 files
       copy:
         src: "menu/efi64/{{ item }}"
@@ -73,7 +72,6 @@
         loop_var: server
   when: pxe_deploy_configure_action == "generate"
 
-
 - name: cleanup pxe
   block:
     # - name: create pxe menu directory structure
@@ -102,7 +100,7 @@
       find:
         paths: "{{ pxe_deploy_menu_folder }}"
         patterns: "*.cfg"
-        recurse: "yes"
+        recurse: true
       register: menu_files_to_delete
 
     - name: old menu cleanup
@@ -115,7 +113,7 @@
       find:
         paths: "{{ pxe_deploy_sysprep_folder }}"
         patterns: "*.cfg"
-        recurse: "yes"
+        recurse: true
       register: sysprep_files_to_delete
 
     - name: old sysprep cleanup
