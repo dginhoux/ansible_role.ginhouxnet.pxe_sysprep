@@ -1,4 +1,4 @@
-ginhouxnet.pxe_sysprep
+Ansible Role : dginhoux.pxe_sysprep
 =========
 
 This ansible role create sysprep files for autoinstall linux distrib, it currently support :
