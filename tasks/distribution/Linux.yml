@@ -2,7 +2,7 @@
 - name: generate pxe
   block:
     - name: copy default pxe menu bios files
-      copy:
+      ansible.builtin.copy:
         src: "menu/bios/{{ item }}"
         dest: "{{ pxe_deploy_menu_folder }}/bios/"
         mode: 0777
@@ -15,7 +15,7 @@
         - splash.png
 
     - name: "create pxe menu bios"
-      template:
+      ansible.builtin.template:
         src: "menu/bios/menu.cfg.j2"
         dest: "{{ pxe_deploy_menu_folder }}/bios/{{ server.name }}.cfg"
         mode: 0777
@@ -26,7 +26,7 @@
         loop_var: server
 
     - name: "create pxe sysprep bios"
-      template:
+      ansible.builtin.template:
         src: "sysprep/bios/sysprep-{{ server.os }}.cfg.j2"
         dest: "{{ pxe_deploy_sysprep_folder }}/bios/{{ server.name }}.cfg"
         mode: 0777
@@ -37,7 +37,7 @@
         loop_var: server
 
     - name: copy default pxe menu efi64 files
-      copy:
+      ansible.builtin.copy:
         src: "menu/efi64/{{ item }}"
         dest: "{{ pxe_deploy_menu_folder }}/efi64/"
         mode: 0777
@@ -50,7 +50,7 @@
         - splash.png
 
     - name: "create pxe menu efi64"
-      template:
+      ansible.builtin.template:
         src: "menu/efi64/menu.cfg.j2"
         dest: "{{ pxe_deploy_menu_folder }}/efi64/{{ server.name }}.cfg"
         mode: 0777
@@ -61,7 +61,7 @@
         loop_var: server
 
     - name: "create pxe sysprep efi64"
-      template:
+      ansible.builtin.template:
         src: "sysprep/efi64/sysprep-{{ server.os }}.cfg.j2"
         dest: "{{ pxe_deploy_sysprep_folder }}/efi64/{{ server.name }}.cfg"
         mode: 0777
@@ -75,7 +75,7 @@
 - name: cleanup pxe
   block:
     # - name: create pxe menu directory structure
-    #   file:
+    #   ansible.builtin.file:
     #     path: "{{ pxe_deploy_menu_folder }}/{{ item }}"
     #     state: directory
     #     mode: 0777
@@ -86,7 +86,7 @@
     #     - efi64
 
     # - name: create pxe sysprep directory structure
-    #   file:
+    #   ansible.builtin.file:
     #     path: "{{ pxe_deploy_sysprep_folder }}/{{ item }}"
     #     state: directory
     #     mode: 0777
@@ -104,7 +104,7 @@
       register: menu_files_to_delete
 
     - name: old menu cleanup
-      file:
+      ansible.builtin.file:
         path: "{{ item.path }}"
         state: absent
       with_items: "{{ menu_files_to_delete.files }}"
@@ -117,7 +117,7 @@
       register: sysprep_files_to_delete
 
     - name: old sysprep cleanup
-      file:
+      ansible.builtin.file:
         path: "{{ item.path }}"
         state: absent
       with_items: "{{ sysprep_files_to_delete.files }}"
