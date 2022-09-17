@@ -97,7 +97,7 @@
     #     - efi64
 
     - name: identify old menu for cleanup
-      find:
+      ansible.builtin.find:
         paths: "{{ pxe_deploy_menu_folder }}"
         patterns: "*.cfg"
         recurse: true
@@ -110,7 +110,7 @@
       with_items: "{{ menu_files_to_delete.files }}"
 
     - name: identify old sysprep for cleanup
-      find:
+      ansible.builtin.find:
         paths: "{{ pxe_deploy_sysprep_folder }}"
         patterns: "*.cfg"
         recurse: true
