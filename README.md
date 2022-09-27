@@ -19,8 +19,10 @@ This ansible role create sysprep files for autoinstall linux distrib, it current
 ** 7
 **8
 
-Adding distributions and versions is very easier, because each version has two templates, one for bios boot setup and on for uefi64 boot setup.
-There a list with sysprep file to create, one for entry for each machine.
+Adding distributions and versions is very easier, because each version has two templates, one for bios boot setup and on for uefi64 boot setup.<br />
+There a list with sysprep file to create, one for entry for each machine.<br />
+<br />
+NOTE : all provided syspreps files set root password at `root`
 
 ## REQUIREMENTS
 
