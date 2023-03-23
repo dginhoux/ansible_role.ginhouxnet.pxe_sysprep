@@ -113,6 +113,17 @@ LABEL install Fedora.36 serial_console
   APPEND initrd=os/Fedora.36/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
 {% endif %}
 
+{% if server.os == "Fedora.37" %}
+# LABEL Fedora.37
+LABEL install Fedora.37
+  KERNEL os/Fedora.37/vmlinuz
+  APPEND initrd=os/Fedora.37/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.37 serial_console
+LABEL install Fedora.37 serial_console
+  KERNEL os/Fedora.37/vmlinuz
+  APPEND initrd=os/Fedora.37/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
 MENU SEPARATOR
 
 LABEL gparted

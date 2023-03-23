@@ -42,3 +42,4 @@ pxe_deploy_fedora_33_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions
 pxe_deploy_fedora_34_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/34/Server/x86_64/os/
 pxe_deploy_fedora_35_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/35/Server/x86_64/os/
 pxe_deploy_fedora_36_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/36/Server/x86_64/os/
+pxe_deploy_fedora_37_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
