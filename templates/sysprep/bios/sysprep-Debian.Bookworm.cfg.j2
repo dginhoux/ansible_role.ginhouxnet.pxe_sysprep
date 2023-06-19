@@ -27,9 +27,9 @@ d-i netcfg/hostname string {{ server.name }}
 ### Mirror settings
 ################################################################################
 d-i mirror/country string manual
-d-i mirror/http/hostname string {{ pxe_deploy_debian_bullseye_mirror_hostname }}
-d-i mirror/http/directory string {{ pxe_deploy_debian_bullseye_mirror_directory }}
-d-i mirror/http/proxy string {{ pxe_deploy_debian_bullseye_mirror_proxy }}
+d-i mirror/http/hostname string {{ pxe_deploy_debian_bookworm_mirror_hostname }}
+d-i mirror/http/directory string {{ pxe_deploy_debian_bookworm_mirror_directory }}
+d-i mirror/http/proxy string {{ pxe_deploy_debian_bookworm_mirror_proxy }}
 
 ################################################################################
 ### Apt setup

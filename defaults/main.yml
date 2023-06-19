@@ -6,11 +6,22 @@ pxe_deploy_menu_folder: /srv/tftp/menu
 pxe_deploy_sysprep_folder: /srv/tftp/sysprep
 pxe_deploy_tftp_address: pxe.infra.ginhoux.net
 
-pxe_deploy_cleanup: "no"
+pxe_deploy_menu_default_files_bios:
+  - default
+  - default.entries
+  - default.theme
+  - splash.png
+pxe_deploy_menu_default_files_efi64:
+  - default
+  - default.entries
+  - default.theme
+  - splash.png
+
+# pxe_deploy_cleanup: false
 
 pxe_deploy:
   - name: srv-swarm-manager1.infra.ginhoux.net
-    os: Fedora.36
+    os: Fedora.37
     partitionning: nolvm-single
     filesystem: ext4
     filesystem_boot: ext2
@@ -21,6 +32,7 @@ pxe_deploy:
     locale: en_US.UTF-8
     kblayout: fr
     timezone: Europe/Paris
+
 
 pxe_deploy_debian_stretch_mirror_hostname: ftp.fr.debian.org
 pxe_deploy_debian_stretch_mirror_directory: /debian
@@ -34,6 +46,10 @@ pxe_deploy_debian_bullseye_mirror_hostname: ftp.fr.debian.org
 pxe_deploy_debian_bullseye_mirror_directory: /debian
 pxe_deploy_debian_bullseye_mirror_proxy: ""
 
+pxe_deploy_debian_bookworm_mirror_hostname: ftp.fr.debian.org
+pxe_deploy_debian_bookworm_mirror_directory: /debian
+pxe_deploy_debian_bookworm_mirror_proxy: ""
+
 pxe_deploy_centos_7_mirror_url: http://mirror.centos.org/centos-7/7/os/x86_64/
 pxe_deploy_centos_8_mirror_url: http://mirror.centos.org/centos-8/8/BaseOS/x86_64/os/
 
@@ -43,3 +59,4 @@ pxe_deploy_fedora_34_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions
 pxe_deploy_fedora_35_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/35/Server/x86_64/os/
 pxe_deploy_fedora_36_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/36/Server/x86_64/os/
 pxe_deploy_fedora_37_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
+pxe_deploy_fedora_38_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/

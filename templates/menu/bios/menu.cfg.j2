@@ -36,6 +36,17 @@ LABEL install Debian.Bullseye serial_console
   APPEND initrd=os/Debian.Bullseye/initrd.gz console=ttyS0,115200n8r hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/bios/{{ server.name }}.cfg
 {% endif %}
 
+{% if server.os == "Debian.Bookworm" %}
+# LABEL Debian.Bookworm
+LABEL install Debian.Bookworm
+  KERNEL os/Debian.Bookworm/linux
+  APPEND initrd=os/Debian.Bookworm/initrd.gz vga=788 hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/bios/{{ server.name }}.cfg
+# LABEL Debian.Bookworm serial_console
+LABEL install Debian.Bookworm serial_console
+  KERNEL os/Debian.Bookworm/linux
+  APPEND initrd=os/Debian.Bookworm/initrd.gz console=ttyS0,115200n8r hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/bios/{{ server.name }}.cfg
+{% endif %}
+
 {% if server.os == "CentOS.7" %}
 # LABEL CentOS.7
 LABEL install CentOS.7
@@ -122,6 +133,17 @@ LABEL install Fedora.37
 LABEL install Fedora.37 serial_console
   KERNEL os/Fedora.37/vmlinuz
   APPEND initrd=os/Fedora.37/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/bios/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.38" %}
+# LABEL Fedora.38
+LABEL install Fedora.38
+  KERNEL os/Fedora.38/vmlinuz
+  APPEND initrd=os/Fedora.38/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/bios/{{ server.name }}.cfg
+# LABEL Fedora.38 serial_console
+LABEL install Fedora.38 serial_console
+  KERNEL os/Fedora.38/vmlinuz
+  APPEND initrd=os/Fedora.38/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/bios/{{ server.name }}.cfg
 {% endif %}
 
 MENU SEPARATOR

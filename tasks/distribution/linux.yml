@@ -1,80 +1,74 @@
 ---
-- name: generate pxe
-  when: pxe_deploy_configure_action == "generate"
+- name: Generate pxe
+  when:
+    - pxe_deploy_configure_action == "generate"
   block:
-    - name: copy default pxe menu bios files
-      loop:
-        - default
-        - default.entries
-        - default.theme
-        - splash.png
+    - name: Copy default pxe menu bios files
+      loop: "{{ pxe_deploy_menu_default_files_bios | flatten }}"
       ansible.builtin.copy:
         src: "menu/bios/{{ item }}"
         dest: "{{ pxe_deploy_menu_folder }}/bios/"
-        mode: "0777"
+        mode: "0644"
         owner: root
         group: root
 
-    - name: "create pxe menu bios"
+    - name: Create pxe menu bios
       loop: "{{ pxe_deploy | flatten }}"
       loop_control:
         loop_var: server
       ansible.builtin.template:
         src: "menu/bios/menu.cfg.j2"
         dest: "{{ pxe_deploy_menu_folder }}/bios/{{ server.name }}.cfg"
-        mode: "0777"
+        mode: "0644"
         owner: root
         group: root
 
-    - name: "create pxe sysprep bios"
+    - name: Create pxe sysprep bios
       loop: "{{ pxe_deploy | flatten }}"
       loop_control:
         loop_var: server
       ansible.builtin.template:
         src: "sysprep/bios/sysprep-{{ server.os }}.cfg.j2"
         dest: "{{ pxe_deploy_sysprep_folder }}/bios/{{ server.name }}.cfg"
-        mode: "0777"
+        mode: "0644"
         owner: root
         group: root
 
-    - name: copy default pxe menu efi64 files
-      loop:
-        - default
-        - default.entries
-        - default.theme
-        - splash.png
+    - name: Copy default pxe menu efi64 files
+      loop: "{{ pxe_deploy_menu_default_files_efi64 | flatten }}"
       ansible.builtin.copy:
         src: "menu/efi64/{{ item }}"
         dest: "{{ pxe_deploy_menu_folder }}/efi64/"
-        mode: "0777"
+        mode: "0644"
         owner: root
         group: root
 
-    - name: "create pxe menu efi64"
+    - name: Create pxe menu efi64
       loop: "{{ pxe_deploy | flatten }}"
       loop_control:
         loop_var: server
       ansible.builtin.template:
         src: "menu/efi64/menu.cfg.j2"
         dest: "{{ pxe_deploy_menu_folder }}/efi64/{{ server.name }}.cfg"
-        mode: "0777"
+        mode: "0644"
         owner: root
         group: root
 
-    - name: "create pxe sysprep efi64"
+    - name: Create pxe sysprep efi64
       loop: "{{ pxe_deploy | flatten }}"
       loop_control:
         loop_var: server
       ansible.builtin.template:
         src: "sysprep/efi64/sysprep-{{ server.os }}.cfg.j2"
         dest: "{{ pxe_deploy_sysprep_folder }}/efi64/{{ server.name }}.cfg"
-        mode: "0777"
+        mode: "0644"
         owner: root
         group: root
 
 
-- name: cleanup pxe
-  when: pxe_deploy_configure_action == "cleanup"
+- name: Cleanup pxe
+  when:
+    - pxe_deploy_configure_action == "cleanup"
   block:
     # - name: create pxe menu directory structure
     #   ansible.builtin.file:
@@ -98,27 +92,27 @@
     #     - bios
     #     - efi64
 
-    - name: identify old menu for cleanup
+    - name: Identify old menu for cleanup
       register: menu_files_to_delete
       ansible.builtin.find:
         paths: "{{ pxe_deploy_menu_folder }}"
         patterns: "*.cfg"
         recurse: true
 
-    - name: old menu cleanup
+    - name: Old menu cleanup
       with_items: "{{ menu_files_to_delete.files }}"
       ansible.builtin.file:
         path: "{{ item.path }}"
         state: absent
 
-    - name: identify old sysprep for cleanup
+    - name: Identify old sysprep for cleanup
       register: sysprep_files_to_delete
       ansible.builtin.find:
         paths: "{{ pxe_deploy_sysprep_folder }}"
         patterns: "*.cfg"
         recurse: true
 
-    - name: old sysprep cleanup
+    - name: Old sysprep cleanup
       with_items: "{{ sysprep_files_to_delete.files }}"
       ansible.builtin.file:
         path: "{{ item.path }}"
