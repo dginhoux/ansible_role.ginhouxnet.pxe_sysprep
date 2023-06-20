@@ -9,15 +9,18 @@ This ansible role create sysprep files for autoinstall linux distrib, it current
 ** stretch
 ** buster
 ** bullseye
+** bookworm
 * fedora
 ** 32
 ** 33
 ** 34
 ** 35
 ** 36
+** 37
+** 38
 * centos
 ** 7
-**8
+** 8
 
 Adding distributions and versions is very easier, because each version has two templates, one for bios boot setup and on for uefi64 boot setup.<br />
 There a list with sysprep file to create, one for entry for each machine.<br />
@@ -28,15 +31,16 @@ NOTE : all provided syspreps files set root password at `root`
 
 #### SUPPORTED PLATFORMS
 
-This role require a supported platform.<br />
-It will skip process with unsupported platform to avoid any compatibility problem.<br />
-This behaviour can be bypassed by settings the following variable `skip_check_platform_compatibility=true`.
+This role is tested on the following platforms.<br />
 
 | Platform | Versions |
 |----------|----------|
-| Debian | buster, bullseye |
+| Debian | buster, bullseye, bookworm |
 | Fedora | 33, 34, 35, 36, 37, 38 |
 | EL | 7, 8 |
+
+You can set this variable `check_compatibility` to let the role skip nodes with unsupporteds platforms to avoid any compatibility problems.<br />
+
 
 #### ANSIBLE VERSION
 
