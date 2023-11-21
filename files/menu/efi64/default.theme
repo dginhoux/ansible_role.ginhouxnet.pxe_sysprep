@@ -12,9 +12,9 @@ MENU RESOLUTION 1024 768
 MENU BACKGROUND splash.png
 MENU CLEAR
 
-PROMPT 0         # Pas de prompt
-NOESCAPE 1       # Unactivate escape keyboard
-ALLOWOPTIONS 1   # disallow options
+# PROMPT 0         # Pas de prompt
+# NOESCAPE 1       # Unactivate escape keyboard
+# ALLOWOPTIONS 1   # disallow options
 
 # MENU COLOR screen      0  #80ffffff #00000000 std      # background colour not covered by the splash image
 # MENU COLOR border      0  #ffff0000 #ee000000 std      # the wire-frame border

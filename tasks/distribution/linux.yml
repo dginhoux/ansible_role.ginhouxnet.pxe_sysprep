@@ -16,6 +16,7 @@
       loop: "{{ pxe_deploy | flatten }}"
       loop_control:
         loop_var: server
+        label: "server: {{ server.name }}, os: {{ server.os }}"
       ansible.builtin.template:
         src: "menu/bios/menu.cfg.j2"
         dest: "{{ pxe_deploy_menu_folder }}/bios/{{ server.name }}.cfg"
@@ -27,6 +28,7 @@
       loop: "{{ pxe_deploy | flatten }}"
       loop_control:
         loop_var: server
+        label: "server: {{ server.name }}, os: {{ server.os }}"
       ansible.builtin.template:
         src: "sysprep/bios/sysprep-{{ server.os }}.cfg.j2"
         dest: "{{ pxe_deploy_sysprep_folder }}/bios/{{ server.name }}.cfg"
@@ -47,6 +49,7 @@
       loop: "{{ pxe_deploy | flatten }}"
       loop_control:
         loop_var: server
+        label: "server: {{ server.name }}, os: {{ server.os }}"
       ansible.builtin.template:
         src: "menu/efi64/menu.cfg.j2"
         dest: "{{ pxe_deploy_menu_folder }}/efi64/{{ server.name }}.cfg"
@@ -58,6 +61,7 @@
       loop: "{{ pxe_deploy | flatten }}"
       loop_control:
         loop_var: server
+        label: "server: {{ server.name }}, os: {{ server.os }}"
       ansible.builtin.template:
         src: "sysprep/efi64/sysprep-{{ server.os }}.cfg.j2"
         dest: "{{ pxe_deploy_sysprep_folder }}/efi64/{{ server.name }}.cfg"
@@ -98,11 +102,18 @@
         paths: "{{ pxe_deploy_menu_folder }}"
         patterns: "*.cfg"
         recurse: true
+        file_type: file
 
     - name: Old menu cleanup
-      with_items: "{{ menu_files_to_delete.files }}"
+      when:
+        - menu_files_to_delete.files is defined
+        - menu_files_to_delete.files is iterable
+      loop: "{{ menu_files_to_delete.files | flatten }}"
+      loop_control:
+        loop_var: file
+        label: "file: {{ file.path }}"
       ansible.builtin.file:
-        path: "{{ item.path }}"
+        path: "{{ file.path }}"
         state: absent
 
     - name: Identify old sysprep for cleanup
@@ -113,7 +124,13 @@
         recurse: true
 
     - name: Old sysprep cleanup
-      with_items: "{{ sysprep_files_to_delete.files }}"
+      when:
+        - sysprep_files_to_delete.files is defined
+        - sysprep_files_to_delete.files is iterable
+      loop: "{{ sysprep_files_to_delete.files | flatten }}"
+      loop_control:
+        loop_var: file
+        label: "file: {{ file.path }}"
       ansible.builtin.file:
-        path: "{{ item.path }}"
+        path: "{{ file.path }}"
         state: absent
