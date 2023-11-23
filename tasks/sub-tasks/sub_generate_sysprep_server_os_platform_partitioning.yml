@@ -18,10 +18,32 @@
   ansible.builtin.set_fact:
     menu_entries: '{{ menu_entries + [ { "platform" : platform.name, "os" : os.name, "partitioning" : partitioning, "menu_append_opts" : menu_append_opts } ] }}'
 
+
+- name: Define partitioning scheme
+  block:
+    - name: Define partitioning scheme
+      ansible.builtin.set_fact:
+        sysprep_part_scheme: "{{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning].scheme }}"
+    - name: Define partitioning scheme
+      ansible.builtin.set_fact:
+        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('{_{_{_ server.vgname _}_}_}', server.vgname) }}"
+    - name: Define partitioning scheme
+      ansible.builtin.set_fact:
+        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('{_{_{_ server.filesystem_boot _}_}_}', server.filesystem_boot) }}"
+    - name: Define partitioning scheme
+      ansible.builtin.set_fact:
+        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('{_{_{_ server.filesystem _}_}_}', server.filesystem) }}"
+    - name: Define partitioning scheme
+      ansible.builtin.set_fact:
+        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('{_{_{_ server.disk _}_}_}', server.disk) }}"
+
+- debug: var=sysprep_part_scheme
+
+
 - name: Generate sysprep file
   when:
     - pxe_sysprep_specs_os_images[os.name].type == "sysprep"
   ansible.builtin.debug:
     msg:
       - "generate sysprep {{ server.name }} {{ os.name }} {{ platform.name }} {{ partitioning }}"
-      - "{{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning].scheme }}"
+      # - "{{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning].scheme | regex_replace('server.vgname', server.vgname) }}"

@@ -11,8 +11,8 @@ pxe_sysprep_generate_servers_list:
     state: present
     # os: Fedora.37
     # partitionning: nolvm-single
-    # filesystem: ext4
-    # filesystem_boot: ext2
+    filesystem: ext4
+    filesystem_boot: ext2
     vgname: vg0
     disk: sda
     domain: infra.ginhoux.net
@@ -63,7 +63,13 @@ pxe_sysprep_generate_servers_list:
             state: present
           - name: efi64
             state: absent
-      # - name: Clonezilla.Any
+      - name: Clonezilla.Any
+        state: present
+        platforms:
+          - name: bios
+            state: present
+          - name: efi64
+            state: absent
 
 
 pxe_sysprep_specs_platforms:
@@ -101,12 +107,22 @@ pxe_sysprep_specs_os_images:
         state: present
         menu:
           kernel_opts: os/clonezilla.any/vmlinuz
-          append_opts: initrd=os/clonezilla.any/initrd.img boot=live username=user union=overlay config components quiet noswap edd=on nomodeset nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt fetch={{ pxe_sysprep_specs_platforms.bios.pxe_http_addr }}/os/clonezilla.any/filesystem.squashfs
+          append_opts: >-
+            initrd=os/clonezilla.any/initrd.img boot=live username=user
+            union=overlay config components quiet noswap edd=on nomodeset
+            nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general"
+            ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt
+            fetch={{ pxe_sysprep_specs_platforms.bios.pxe_http_addr }}/os/clonezilla.any/filesystem.squashfs
       efi64:
         state: present
         menu:
           kernel_opts: os/clonezilla.any/vmlinuz
-          append_opts: initrd=os/clonezilla.any/initrd.img boot=live username=user union=overlay config components quiet noswap edd=on nomodeset nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/clonezilla.any/filesystem.squashfs
+          append_opts: >-
+            initrd=os/clonezilla.any/initrd.img boot=live username=user
+            union=overlay config components quiet noswap edd=on nomodeset
+            nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general"
+            ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt
+            fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/clonezilla.any/filesystem.squashfs
   Gparted.Any:
     state: present
     type: tool
@@ -116,12 +132,18 @@ pxe_sysprep_specs_os_images:
         state: present
         menu:
           kernel_opts: os/gparted.any/vmlinuz
-          append_opts: initrd=os/gparted.any/initrd.img boot=live config components union=overlay username=user noswap noeject vga=791 fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/gparted.any/filesystem.squashfs
+          append_opts: >-
+            initrd=os/gparted.any/initrd.img boot=live config components union=overlay
+            username=user noswap noeject vga=791
+            fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/gparted.any/filesystem.squashfs
       efi64:
         state: present
         menu:
           kernel_opts: os/gparted.any/vmlinuz
-          append_opts: initrd=os/gparted.any/initrd.img boot=live config components union=overlay username=user noswap noeject vga=791 fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/gparted.any/filesystem.squashfs
+          append_opts: >-
+            initrd=os/gparted.any/initrd.img boot=live config components union=overlay
+            username=user noswap noeject vga=791
+            fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/gparted.any/filesystem.squashfs
   Fedora.37:
     state: present
     type: sysprep
