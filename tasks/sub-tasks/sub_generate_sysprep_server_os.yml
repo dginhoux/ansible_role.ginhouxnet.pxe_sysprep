@@ -1,0 +1,17 @@
+---
+
+- name: Include sysprep tasks for server/os/platform
+  when:
+    - os.state is defined
+    - os.state == "present"
+    - os.platforms is defined
+    - os.platforms is iterable
+    - os.platforms | length > 0
+    - pxe_sysprep_specs_platforms[platform.name] is defined
+    - pxe_sysprep_specs_platforms[platform.name].state == "present"
+  loop: "{{ os.platforms | flatten }}"
+  loop_control:
+    loop_var: platform
+    label: "platform: {{ platform.name }}"
+  ansible.builtin.include_tasks:
+    file: "sub-tasks/sub_generate_sysprep_server_os_platform.yml"

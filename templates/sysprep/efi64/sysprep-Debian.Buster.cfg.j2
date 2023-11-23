@@ -1,9 +1,9 @@
 ################################################################################
 ### Localization
 ################################################################################
-d-i debian-installer/locale string {{ server.locale }}
-d-i console-keymaps-at/keymap select {{ server.kblayout }}
-d-i keyboard-configuration/xkb-keymap select {{ server.kblayout }}
+d-i debian-installer/locale string {_{_{_ server.locale _}_}_}
+d-i console-keymaps-at/keymap select {_{_{_ server.kblayout _}_}_}
+d-i keyboard-configuration/xkb-keymap select {_{_{_ server.kblayout _}_}_}
 
 ################################################################################
 ### Network configuration
@@ -17,19 +17,19 @@ d-i netcfg/choose_interface select auto
 # d-i netcfg/get_gateway string 
 # d-i netcfg/get_nameservers string 
 # d-i netcfg/confirm_static boolean true
-d-i netcfg/get_hostname string {{ server.name }}
+d-i netcfg/get_hostname string {_{_{_ server.name _}_}_}
 d-i netcfg/get_hostname seen true
-d-i netcfg/get_domain string {{ server.domain }}
+d-i netcfg/get_domain string {_{_{_ server.domain _}_}_}
 d-i netcfg/get_domain seen true
-d-i netcfg/hostname string {{ server.name }}
+d-i netcfg/hostname string {_{_{_ server.name _}_}_}
 
 ################################################################################
 ### Mirror settings
 ################################################################################
 d-i mirror/country string manual
-d-i mirror/http/hostname string {{ pxe_deploy_debian_buster_mirror_hostname }}
-d-i mirror/http/directory string {{ pxe_deploy_debian_buster_mirror_directory }}
-d-i mirror/http/proxy string {{ pxe_deploy_debian_buster_mirror_proxy }}
+d-i mirror/http/hostname string {_{_{_ pxe_deploy_debian_buster_mirror_hostname _}_}_}
+d-i mirror/http/directory string {_{_{_ pxe_deploy_debian_buster_mirror_directory _}_}_}
+d-i mirror/http/proxy string {_{_{_ pxe_deploy_debian_buster_mirror_proxy _}_}_}
 
 ################################################################################
 ### Apt setup
@@ -40,7 +40,7 @@ d-i apt-setup/contrib boolean true
 ################################################################################
 ### Partitioning
 ################################################################################
-d-i partman-auto/disk string /dev/{{ server.disk }}
+d-i partman-auto/disk string /dev/{_{_{_ server.disk _}_}_}
 d-i partman-md/device_remove_md boolean true
 d-i partman/choose_partition select finish
 d-i partman/default_filesystem string ext4
@@ -67,54 +67,54 @@ d-i partman/confirm_write_new_label boolean true
 d-i partman-auto/method string regular
 d-i partman-auto/expert_recipe string boot-root :: \
 128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-6000 50 -1 {{ server.filesystem | default('ext4') }} $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ / } .
+6000 50 -1 {_{_{_ server.filesystem | default('ext4') _}_}_} $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ / } .
 {% endif %}
 
 {% if server.partitionning == 'lvm-multi' %}
 d-i partman-auto/method string lvm
 d-i partman-auto-lvm/guided_size string 100%
-d-i partman-auto-lvm/new_vg_name string {{ server.vgname | default('vg0') }}
+d-i partman-auto-lvm/new_vg_name string {_{_{_ server.vgname | default('vg0') _}_}_}
 d-i partman-auto/expert_recipe string boot-root :: \
 128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-512 512 512 {{ server.filesystem_boot | default('ext2') }} $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem_boot | default('ext2') }} } mountpoint{ /boot } . \
-6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ {{ server.vgname | default('vg0') }} } . \
-4096 4096 4096 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-root } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ / } . \
-2048 2048 2048 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-var } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ /var } . \
-1024 1024 1024 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-home } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ /home } . \
-1024 1024 1024 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-tmp } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ /tmp } . \
-2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ {{ server.vgname | default('vg0') }} } method{ swap } format{ } .
+512 512 512 {_{_{_ server.filesystem_boot | default('ext2') _}_}_} $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem_boot | default('ext2') _}_}_} } mountpoint{ /boot } . \
+6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ {_{_{_ server.vgname | default('vg0') _}_}_} } . \
+4096 4096 4096 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-root } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ / } . \
+2048 2048 2048 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-var } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ /var } . \
+1024 1024 1024 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-home } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ /home } . \
+1024 1024 1024 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-tmp } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ /tmp } . \
+2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ swap } format{ } .
 {% endif %}
 
 {% if server.partitionning == 'lvm-multi2' %}
 d-i partman-auto/method string lvm
 d-i partman-auto-lvm/guided_size string 100%
-d-i partman-auto-lvm/new_vg_name string {{ server.vgname | default('vg0') }}
+d-i partman-auto-lvm/new_vg_name string {_{_{_ server.vgname | default('vg0') _}_}_}
 d-i partman-auto/expert_recipe string boot-root :: \
 128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-512 512 512 {{ server.filesystem_boot | default('ext2') }} $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem_boot | default('ext2') }} } mountpoint{ /boot } . \
-6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ {{ server.vgname | default('vg0') }} } . \
-2048 2048 2048 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-root } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ / } . \
-4096 4096 4096 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-usr } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ /usr } . \
-2048 2048 2048 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-var } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ /var } . \
-1024 1024 1024 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-home } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ /home } . \
-1024 1024 1024 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-tmp } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ /tmp } . \
-1024 1024 1024 {{ server.filesystem | default('ext4') }} $lvmok{ } $lv_name{ lv-opt } in_vg{ {{ server.vgname | default('vg0') }} } method{ format } format{ } use_filesystem{ } filesystem{ {{ server.filesystem | default('ext4') }} } mountpoint{ /opt } . \
-2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ {{ server.vgname | default('vg0') }} } method{ swap } format{ } .
+512 512 512 {_{_{_ server.filesystem_boot | default('ext2') _}_}_} $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem_boot | default('ext2') _}_}_} } mountpoint{ /boot } . \
+6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ {_{_{_ server.vgname | default('vg0') _}_}_} } . \
+2048 2048 2048 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-root } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ / } . \
+4096 4096 4096 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-usr } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ /usr } . \
+2048 2048 2048 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-var } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ /var } . \
+1024 1024 1024 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-home } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ /home } . \
+1024 1024 1024 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-tmp } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ /tmp } . \
+1024 1024 1024 {_{_{_ server.filesystem | default('ext4') _}_}_} $lvmok{ } $lv_name{ lv-opt } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ format } format{ } use_filesystem{ } filesystem{ {_{_{_ server.filesystem | default('ext4') _}_}_} } mountpoint{ /opt } . \
+2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ {_{_{_ server.vgname | default('vg0') _}_}_} } method{ swap } format{ } .
 {% endif %}
 
 ################################################################################
 ### Clock and time zone setup
 ################################################################################
 d-i clock-setup/utc boolean true
-d-i time/zone string {{ server.timezone }}
+d-i time/zone string {_{_{_ server.timezone _}_}_}
 d-i clock-setup/ntp boolean true
 
 ################################################################################
 ### Account setup
 ################################################################################
 d-i passwd/root-login boolean true
-d-i passwd/root-password password {{ server.rootpwd }}
-d-i passwd/root-password-again password {{ server.rootpwd }}
+d-i passwd/root-password password {_{_{_ server.rootpwd _}_}_}
+d-i passwd/root-password-again password {_{_{_ server.rootpwd _}_}_}
 d-i passwd/make-user boolean false
 
 ################################################################################

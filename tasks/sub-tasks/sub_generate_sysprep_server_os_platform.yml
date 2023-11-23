@@ -1,0 +1,48 @@
+---
+
+- name: Include sysprep tasks for server/os/platform/partitioning
+  when:
+    - partitioning is defined
+    - partitioning is iterable
+    - partitioning | length > 0
+    - pxe_sysprep_specs_platforms[platform.name] is defined
+    - pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name] is defined
+    - pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'] is defined
+    - pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning] is defined
+    - pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning].state == "present"
+  loop: "{{ platform.partitionings | flatten }}"
+  loop_control:
+    loop_var: partitioning
+    label: "partitioning: {{ partitioning }}"
+  ansible.builtin.include_tasks:
+    file: "sub-tasks/sub_generate_sysprep_server_os_platform_partitioning.yml"
+
+
+- name: Tasks for server/os/platform without partitionings
+  when:
+    - platform.partitionings is not defined
+  block:
+
+    - name: Define menu entry append options
+      ansible.builtin.set_fact:
+        menu_append_opts: >-
+          {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_opts }}
+
+    - name: Define menu entry append options
+      when:
+        - pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts is defined
+      ansible.builtin.set_fact:
+        menu_append_opts: >-
+          {{ menu_append_opts }}
+          {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}
+          {{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}.cfg
+
+    - name: Add menu entry list
+      ansible.builtin.set_fact:
+        menu_entries: '{{ menu_entries + [ { "platform" : platform.name, "os" : os.name, "menu_append_opts" : menu_append_opts } ] }}'
+
+    - name: Generate sysprep file
+      when:
+        - pxe_sysprep_specs_os_images[os.name].type == "sysprep"
+      ansible.builtin.debug:
+        msg: "generate sysprep {{ server.name }} {{ os.name }} {{ platform.name }}"

@@ -1,0 +1,177 @@
+INCLUDE pxelinux.cfg/default.theme
+MENU TITLE PXE MENU - {{ server.name }}
+INCLUDE pxelinux.cfg/default.entries
+MENU SEPARATOR
+
+{% if server.os == "Debian.Stretch" %}
+# LABEL Debian.Stretch
+LABEL install Debian.Stretch
+  KERNEL os/Debian.Stretch/linux
+  APPEND initrd=os/Debian.Stretch/initrd.gz vga=788 hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Debian.Stretch serial_console
+LABEL install Debian.Stretch serial_console
+  KERNEL os/Debian.Stretch/linux
+  APPEND initrd=os/Debian.Stretch/initrd.gz console=ttyS0,115200n8r hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Debian.Buster" %}
+# LABEL Debian.Buster
+LABEL install Debian.Buster
+  KERNEL os/Debian.Buster/linux
+  APPEND initrd=os/Debian.Buster/initrd.gz vga=788 hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Debian.Buster serial_console
+LABEL install Debian.Buster serial_console
+  KERNEL os/Debian.Buster/linux
+  APPEND initrd=os/Debian.Buster/initrd.gz console=ttyS0,115200n8r hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Debian.Bullseye" %}
+# LABEL Debian.Bullseye
+LABEL install Debian.Bullseye
+  KERNEL os/Debian.Bullseye/linux
+  APPEND initrd=os/Debian.Bullseye/initrd.gz vga=788 hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Debian.Bullseye serial_console
+LABEL install Debian.Bullseye serial_console
+  KERNEL os/Debian.Bullseye/linux
+  APPEND initrd=os/Debian.Bullseye/initrd.gz console=ttyS0,115200n8r hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Debian.Bookworm" %}
+# LABEL Debian.Bookworm
+LABEL install Debian.Bookworm
+  KERNEL os/Debian.Bookworm/linux
+  APPEND initrd=os/Debian.Bookworm/initrd.gz vga=788 hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Debian.Bookworm serial_console
+LABEL install Debian.Bookworm serial_console
+  KERNEL os/Debian.Bookworm/linux
+  APPEND initrd=os/Debian.Bookworm/initrd.gz console=ttyS0,115200n8r hostname={{ server.name }} domain={{ server.domain }} auto=true url=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "CentOS.7" %}
+# LABEL CentOS.7
+LABEL install CentOS.7
+  KERNEL os/CentOS.7/vmlinuz
+  APPEND initrd=os/CentOS.7/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL CentOS.7 serial_console
+LABEL install CentOS.7 serial_console
+  KERNEL os/CentOS.7/vmlinuz
+  APPEND initrd=os/CentOS.7/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "CentOS.8" %}
+# LABEL CentOS.8
+LABEL install CentOS.8
+  KERNEL os/CentOS.8/vmlinuz
+  APPEND initrd=os/CentOS.8/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL CentOS.8 serial_console
+LABEL install CentOS.8 serial_console
+  KERNEL os/CentOS.8/vmlinuz
+  APPEND initrd=os/CentOS.8/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.32" %}
+# LABEL Fedora.32
+LABEL install Fedora.32
+  KERNEL os/Fedora.32/vmlinuz
+  APPEND initrd=os/Fedora.32/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.32 serial_console
+LABEL install Fedora.32 serial_console
+  KERNEL os/Fedora.32/vmlinuz
+  APPEND initrd=os/Fedora.32/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.33" %}
+# LABEL Fedora.33
+LABEL install Fedora.33
+  KERNEL os/Fedora.33/vmlinuz
+  APPEND initrd=os/Fedora.33/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.33 serial_console
+LABEL install Fedora.33 serial_console
+  KERNEL os/Fedora.33/vmlinuz
+  APPEND initrd=os/Fedora.33/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.34" %}
+# LABEL Fedora.34
+LABEL install Fedora.34
+  KERNEL os/Fedora.34/vmlinuz
+  APPEND initrd=os/Fedora.34/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.34 serial_console
+LABEL install Fedora.34 serial_console
+  KERNEL os/Fedora.34/vmlinuz
+  APPEND initrd=os/Fedora.34/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.35" %}
+# LABEL Fedora.35
+LABEL install Fedora.35
+  KERNEL os/Fedora.35/vmlinuz
+  APPEND initrd=os/Fedora.35/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.35 serial_console
+LABEL install Fedora.35 serial_console
+  KERNEL os/Fedora.35/vmlinuz
+  APPEND initrd=os/Fedora.35/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.36" %}
+# LABEL Fedora.36
+LABEL install Fedora.36
+  KERNEL os/Fedora.36/vmlinuz
+  APPEND initrd=os/Fedora.36/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.36 serial_console
+LABEL install Fedora.36 serial_console
+  KERNEL os/Fedora.36/vmlinuz
+  APPEND initrd=os/Fedora.36/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.37" %}
+# LABEL Fedora.37
+LABEL install Fedora.37
+  KERNEL os/Fedora.37/vmlinuz
+  APPEND initrd=os/Fedora.37/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.37 serial_console
+LABEL install Fedora.37 serial_console
+  KERNEL os/Fedora.37/vmlinuz
+  APPEND initrd=os/Fedora.37/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.38" %}
+# LABEL Fedora.38
+LABEL install Fedora.38
+  KERNEL os/Fedora.38/vmlinuz
+  APPEND initrd=os/Fedora.38/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.38 serial_console
+LABEL install Fedora.38 serial_console
+  KERNEL os/Fedora.38/vmlinuz
+  APPEND initrd=os/Fedora.38/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+{% if server.os == "Fedora.39" %}
+# LABEL Fedora.39
+LABEL install Fedora.39
+  KERNEL os/Fedora.39/vmlinuz
+  APPEND initrd=os/Fedora.39/initrd.img utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+# LABEL Fedora.39 serial_console
+LABEL install Fedora.39 serial_console
+  KERNEL os/Fedora.39/vmlinuz
+  APPEND initrd=os/Fedora.39/initrd.img console=ttyS0 utf8 text inst.ks=http://{{ pxe_deploy_tftp_address }}/sysprep/efi64/{{ server.name }}.cfg
+{% endif %}
+
+MENU SEPARATOR
+
+LABEL gparted.any
+  KERNEL os/gparted.any/vmlinuz
+  append initrd=os/gparted.any/initrd.img boot=live config components union=overlay username=user noswap noeject vga=791 fetch=http://{{ pxe_deploy_tftp_address }}/os/gparted.any/filesystem.squashfs
+LABEL clonezilla.any
+  KERNEL os/clonezilla.any/vmlinuz
+  append initrd=os/clonezilla.any/initrd.img boot=live username=user union=overlay config components quiet noswap edd=on nomodeset nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt fetch=http://{{ pxe_deploy_tftp_address }}/os/clonezilla.any/filesystem.squashfs
+# LABEL sysresccd
+#   LINUX os/sysresccd/boot/x86_64/vmlinuz
+#   INITRD os/sysresccd/boot/intel_ucode.img,os/sysresccd/boot/amd_ucode.img,os/sysresccd/boot/x86_64/sysresccd.img
+#   APPEND archisobasedir=os/sysresccd archiso_http_srv=http://{{ pxe_deploy_tftp_address }}/ setkmap=fr nofirewall
+#   SYSAPPEND 3
+# LABEL rescuezilla.any
+#   KERNEL os/rescuezilla.any/vmlinuz boot=casper fastboot toram fsck.mode=skip noprompt edd=on
+#   INITRD os/rescuezilla.any/initrd.lz
+#   APPEND root=/dev/ram0 ramdisk_size=10000000 ip=dhcp url=http://{{ pxe_deploy_tftp_address }}/os/rescuezilla.any/rescuezilla.iso
+#   # APPEND ip=dhcp url=http://{{ pxe_deploy_tftp_address }}/os/rescuezilla/rescuezilla.iso

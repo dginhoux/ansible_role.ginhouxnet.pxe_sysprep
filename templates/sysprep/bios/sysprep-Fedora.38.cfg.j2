@@ -1,24 +1,24 @@
 ################################################################################
 ### Mirror settings
 ################################################################################
-url --url={{ pxe_deploy_fedora_38_mirror_url }}
+url --url={_{_{_ pxe_deploy_fedora_38_mirror_url _}_}_}
 
 ################################################################################
 ### Account setup
 ################################################################################
-rootpw --plaintext {{ server.rootpwd }}
+rootpw --plaintext {_{_{_ server.rootpwd _}_}_}
 # auth --passalgo=sha512 --useshadow
 
 ################################################################################
 ### Localization
 ################################################################################
-lang {{ server.locale }}
-keyboard {{ server.kblayout }}
+lang {_{_{_ server.locale _}_}_}
+keyboard {_{_{_ server.kblayout _}_}_}
 
 ################################################################################
 ### Clock and time zone setup
 ################################################################################
-timezone {{ server.timezone }} --isUtc
+timezone {_{_{_ server.timezone _}_}_} --isUtc
 
 ################################################################################
 ### Options
@@ -35,45 +35,45 @@ skipx
 ### Partitioning
 ################################################################################
 zerombr
-clearpart --all --initlabel --drives={{ server.disk }}
+clearpart --all --initlabel --drives={_{_{_ server.disk _}_}_}
 
 {% if server.partitionning == 'nolvm-single' %}
-part / --size 1 --grow --asprimary --fstype={{ server.filesystem | default('ext4') }} --ondisk={{ server.disk }}
+part / --size 1 --grow --asprimary --fstype={_{_{_ server.filesystem | default('ext4') _}_}_} --ondisk={_{_{_ server.disk _}_}_}
 {% endif %}
 
 {% if server.partitionning == 'lvm-multi' %}
-part /boot --fstype={{ server.filesystem_boot | default('ext2') }} --size=512 --ondisk={{ server.disk }}
-part pv.1 --size 1 --grow --fstype=lvmpv --ondisk={{ server.disk }}
-volgroup {{ server.vgname | default('vg0') }} --pesize=32768 pv.1
-logvol / --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=4096 --name=lv-root
-logvol /var --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-var
-logvol /home --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-home
-logvol /tmp --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-tmp
-logvol swap --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-swap
+part /boot --fstype={_{_{_ server.filesystem_boot | default('ext2') _}_}_} --size=512 --ondisk={_{_{_ server.disk _}_}_}
+part pv.1 --size 1 --grow --fstype=lvmpv --ondisk={_{_{_ server.disk _}_}_}
+volgroup {_{_{_ server.vgname | default('vg0') _}_}_} --pesize=32768 pv.1
+logvol / --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=4096 --name=lv-root
+logvol /var --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=2048 --name=lv-var
+logvol /home --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=1024 --name=lv-home
+logvol /tmp --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=1024 --name=lv-tmp
+logvol swap --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=2048 --name=lv-swap
 {% endif %}
 
 {% if server.partitionning == 'lvm-multi2' %}
-part /boot --fstype={{ server.filesystem_boot | default('ext2') }} --size=512 --ondisk={{ server.disk }}
-part pv.1 --size 1 --grow --fstype=lvmpv --ondisk={{ server.disk }}
-volgroup {{ server.vgname | default('vg0') }} --pesize=32768 pv.1
-logvol / --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-root
-logvol /usr --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=4096 --name=lv-usr
-logvol /var --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-var
-logvol /home --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-home
-logvol /tmp --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-tmp
-logvol /opt --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-opt
-logvol swap --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-swap
+part /boot --fstype={_{_{_ server.filesystem_boot | default('ext2') _}_}_} --size=512 --ondisk={_{_{_ server.disk _}_}_}
+part pv.1 --size 1 --grow --fstype=lvmpv --ondisk={_{_{_ server.disk _}_}_}
+volgroup {_{_{_ server.vgname | default('vg0') _}_}_} --pesize=32768 pv.1
+logvol / --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=2048 --name=lv-root
+logvol /usr --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=4096 --name=lv-usr
+logvol /var --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=2048 --name=lv-var
+logvol /home --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=1024 --name=lv-home
+logvol /tmp --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=1024 --name=lv-tmp
+logvol /opt --fstype {_{_{_ server.filesystem | default('ext4') _}_}_} --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=1024 --name=lv-opt
+logvol swap --vgname {_{_{_ server.vgname | default('vg0') _}_}_} --size=2048 --name=lv-swap
 {% endif %}
 
 ################################################################################
 ### Boot loader installation
 ################################################################################
-bootloader --location=mbr --append="crashkernel=auto" --boot-drive={{ server.disk }}
+bootloader --location=mbr --append="crashkernel=auto" --boot-drive={_{_{_ server.disk _}_}_}
 
 ################################################################################
 ### Network configuration
 ################################################################################
-network --hostname {{ server.name }}
+network --hostname {_{_{_ server.name _}_}_}
 network --activate --onboot=yes --bootproto=dhcp
 
 ################################################################################

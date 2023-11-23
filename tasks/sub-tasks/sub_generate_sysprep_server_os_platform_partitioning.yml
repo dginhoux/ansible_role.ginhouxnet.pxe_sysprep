@@ -1,0 +1,27 @@
+---
+
+- name: Define menu entry append options
+  ansible.builtin.set_fact:
+    menu_append_opts: >-
+      {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_opts }}
+
+- name: Define menu entry append options
+  when:
+    - pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts is defined
+  ansible.builtin.set_fact:
+    menu_append_opts: >-
+      {{ menu_append_opts }}
+      {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}
+      {{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}.cfg
+
+- name: Add menu entry list
+  ansible.builtin.set_fact:
+    menu_entries: '{{ menu_entries + [ { "platform" : platform.name, "os" : os.name, "partitioning" : partitioning, "menu_append_opts" : menu_append_opts } ] }}'
+
+- name: Generate sysprep file
+  when:
+    - pxe_sysprep_specs_os_images[os.name].type == "sysprep"
+  ansible.builtin.debug:
+    msg:
+      - "generate sysprep {{ server.name }} {{ os.name }} {{ platform.name }} {{ partitioning }}"
+      - "{{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning].scheme }}"
