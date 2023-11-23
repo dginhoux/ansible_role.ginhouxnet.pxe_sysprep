@@ -22,7 +22,6 @@
   when:
     - platform.partitionings is not defined
   block:
-
     - name: Define menu entry append options
       ansible.builtin.set_fact:
         menu_append_opts: >-
@@ -34,8 +33,7 @@
       ansible.builtin.set_fact:
         menu_append_opts: >-
           {{ menu_append_opts }}
-          {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}
-          {{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}.cfg
+          {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}{{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}.cfg
 
     - name: Add menu entry list
       ansible.builtin.set_fact:

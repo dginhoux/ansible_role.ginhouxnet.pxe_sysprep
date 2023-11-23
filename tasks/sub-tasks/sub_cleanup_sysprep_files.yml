@@ -1,0 +1,20 @@
+---
+
+- name: Identify old sysprep for cleanup
+  register: sysprep_files_to_delete
+  ansible.builtin.find:
+    paths: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_platforms[platform].sysprep_folder }}"
+    patterns: "*.cfg"
+    recurse: true
+
+- name: Old sysprep cleanup
+  when:
+    - sysprep_files_to_delete.files is defined
+    - sysprep_files_to_delete.files is iterable
+  loop: "{{ sysprep_files_to_delete.files | flatten }}"
+  loop_control:
+    loop_var: file
+    label: "file: {{ file.path }}"
+  ansible.builtin.file:
+    path: "{{ file.path }}"
+    state: absent

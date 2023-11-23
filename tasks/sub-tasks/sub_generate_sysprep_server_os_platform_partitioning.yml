@@ -11,39 +11,45 @@
   ansible.builtin.set_fact:
     menu_append_opts: >-
       {{ menu_append_opts }}
-      {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}
-      {{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}.cfg
+      {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}{{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}_{{ partitioning }}.cfg
+
 
 - name: Add menu entry list
   ansible.builtin.set_fact:
     menu_entries: '{{ menu_entries + [ { "platform" : platform.name, "os" : os.name, "partitioning" : partitioning, "menu_append_opts" : menu_append_opts } ] }}'
 
 
-- name: Define partitioning scheme
+- name: Generate partitioning scheme
   block:
     - name: Define partitioning scheme
       ansible.builtin.set_fact:
         sysprep_part_scheme: "{{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning].scheme }}"
     - name: Define partitioning scheme
       ansible.builtin.set_fact:
-        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('{_{_{_ server.vgname _}_}_}', server.vgname) }}"
+        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('VAR_SERVER_VGNAME', server.vgname) }}"
     - name: Define partitioning scheme
       ansible.builtin.set_fact:
-        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('{_{_{_ server.filesystem_boot _}_}_}', server.filesystem_boot) }}"
+        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('VAR_SERVER_FS_BOOT', server.filesystem_boot) }}"
     - name: Define partitioning scheme
       ansible.builtin.set_fact:
-        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('{_{_{_ server.filesystem _}_}_}', server.filesystem) }}"
+        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('VAR_SERVER_FS_GLOBAL', server.filesystem_global) }}"
     - name: Define partitioning scheme
       ansible.builtin.set_fact:
-        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('{_{_{_ server.disk _}_}_}', server.disk) }}"
+        sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('VAR_SERVER_DISK', server.disk) }}"
 
-- debug: var=sysprep_part_scheme
+
+# - debug: var=sysprep_part_scheme
 
 
 - name: Generate sysprep file
   when:
     - pxe_sysprep_specs_os_images[os.name].type == "sysprep"
-  ansible.builtin.debug:
-    msg:
-      - "generate sysprep {{ server.name }} {{ os.name }} {{ platform.name }} {{ partitioning }}"
-      # - "{{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning].scheme | regex_replace('server.vgname', server.vgname) }}"
+  ansible.builtin.template:
+    src: "sysprep/{{ platform.name }}/sysprep-{{ os.name }}.cfg.j2"
+    dest: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}_{{ partitioning }}.cfg"
+    owner: root
+    group: root
+    mode: "0644"
+    trim_blocks: false
+    # variable_start_string: "((##"
+    # variable_end_string: "##))"

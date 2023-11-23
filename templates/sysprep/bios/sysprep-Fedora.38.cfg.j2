@@ -1,7 +1,7 @@
 ################################################################################
 ### Mirror settings
 ################################################################################
-url --url={{ pxe_deploy_fedora_38_mirror_url }}
+url --url={{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].url }} {% if pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].proxy is defined %}--proxy={{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].proxy }}{% endif %}
 
 ################################################################################
 ### Account setup
@@ -37,33 +37,7 @@ skipx
 zerombr
 clearpart --all --initlabel --drives={{ server.disk }}
 
-{% if server.partitionning == 'nolvm-single' %}
-part / --size 1 --grow --asprimary --fstype={{ server.filesystem | default('ext4') }} --ondisk={{ server.disk }}
-{% endif %}
-
-{% if server.partitionning == 'lvm-multi' %}
-part /boot --fstype={{ server.filesystem_boot | default('ext2') }} --size=512 --ondisk={{ server.disk }}
-part pv.1 --size 1 --grow --fstype=lvmpv --ondisk={{ server.disk }}
-volgroup {{ server.vgname | default('vg0') }} --pesize=32768 pv.1
-logvol / --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=4096 --name=lv-root
-logvol /var --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-var
-logvol /home --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-home
-logvol /tmp --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-tmp
-logvol swap --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-swap
-{% endif %}
-
-{% if server.partitionning == 'lvm-multi2' %}
-part /boot --fstype={{ server.filesystem_boot | default('ext2') }} --size=512 --ondisk={{ server.disk }}
-part pv.1 --size 1 --grow --fstype=lvmpv --ondisk={{ server.disk }}
-volgroup {{ server.vgname | default('vg0') }} --pesize=32768 pv.1
-logvol / --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-root
-logvol /usr --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=4096 --name=lv-usr
-logvol /var --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-var
-logvol /home --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-home
-logvol /tmp --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-tmp
-logvol /opt --fstype {{ server.filesystem | default('ext4') }} --vgname {{ server.vgname | default('vg0') }} --size=1024 --name=lv-opt
-logvol swap --vgname {{ server.vgname | default('vg0') }} --size=2048 --name=lv-swap
-{% endif %}
+{{ sysprep_part_scheme }}
 
 ################################################################################
 ### Boot loader installation

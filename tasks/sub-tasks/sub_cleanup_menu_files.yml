@@ -1,0 +1,20 @@
+---
+
+- name: Identify old menu for cleanup
+  register: menu_files_to_delete
+  ansible.builtin.find:
+    paths: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_platforms[platform].menu_folder }}"
+    patterns: "*.cfg"
+    recurse: true
+
+- name: Old menu cleanup
+  when:
+    - menu_files_to_delete.files is defined
+    - menu_files_to_delete.files is iterable
+  loop: "{{ menu_files_to_delete.files | flatten }}"
+  loop_control:
+    loop_var: file
+    label: "file: {{ file.path }}"
+  ansible.builtin.file:
+    path: "{{ file.path }}"
+    state: absent
