@@ -1,18 +1,34 @@
 ---
 
+- name: Define menu sysprep file url
+  ansible.builtin.set_fact:
+    menu_sysprep_file_url: >-
+      {{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}_{{ partitioning }}.cfg
+
+
 - name: Define menu entry append options
   ansible.builtin.set_fact:
     menu_append_opts: >-
       {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_opts }}
-
 - name: Define menu entry append options
   when:
     - pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts is defined
   ansible.builtin.set_fact:
     menu_append_opts: >-
-      {{ menu_append_opts }}
-      {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}{{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}_{{ partitioning }}.cfg
-
+      {{ menu_append_opts }} {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}
+- name: Define menu entry append options
+  ansible.builtin.set_fact:
+    menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_SERVER_SYSPREP_FILE', menu_sysprep_file_url) }}"
+- name: Define menu entry append options
+  ansible.builtin.set_fact:
+    menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_SERVER_NAME', server.name) }}"
+- name: Define menu entry append options
+  ansible.builtin.set_fact:
+    menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_SERVER_DOMAIN', server.domain) }}"
+- name: Define menu entry append options
+  ansible.builtin.set_fact:
+    menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_PXE_HTTP_URL', pxe_sysprep_specs_platforms[platform.name].pxe_http_addr) }}"
+      
 
 - name: Add menu entry list
   ansible.builtin.set_fact:

@@ -19,42 +19,42 @@ pxe_sysprep_generate_servers_list:
     kblayout: fr
     timezone: Europe/Paris
     os_images_list:
-      - name: fedora.37
+      - name: fedora.37.x86_64
         state: present
         platforms:
-          - { name: bios, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-          - { name: efi64, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-      - name: fedora.38
+          - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+          - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+      - name: fedora.38.x86_64
         state: present
         platforms:
-          - { name: bios, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-          - { name: efi64, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-      - name: fedora.39
+          - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+          - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+      - name: fedora.39.x86_64
         state: present
         platforms:
-          - { name: bios, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-          - { name: efi64, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-      - name: debian.buster
+          - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+          - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+      - name: debian.buster.x86_64
         state: present
         platforms:
-          - { name: bios, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-          - { name: efi64, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-      - name: debian.bookworm
+          - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+          - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+      - name: debian.bookworm.x86_64
         state: present
         platforms:
-          - { name: bios, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-          - { name: efi64, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-      - name: debian.bullseye
+          - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+          - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+      - name: debian.bullseye.x86_64
         state: present
         platforms:
-          - { name: bios, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-          - { name: efi64, state: present, partitionings: { "nolvm-single", "lvm-multi1", "lvm-multi2" } }
-      - name: clonezilla.any
+          - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+          - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
+      - name: clonezilla.any.x86_64
         state: present
         platforms:
           - { name: bios, state: present }
           - { name: efi64, state: present }
-      - name: gparted.any
+      - name: gparted.any.x86_64
         state: present
         platforms:
           - { name: bios, state: present }
@@ -78,7 +78,7 @@ pxe_sysprep_specs_platforms:
 
 
 pxe_sysprep_specs_os_images:
-  clonezilla.any:
+  clonezilla.any.x86_64:
     state: present
     type: tool
     label: launch clonezilla tools
@@ -86,24 +86,24 @@ pxe_sysprep_specs_os_images:
       bios:
         state: present
         menu:
-          kernel_opts: os/clonezilla.any/vmlinuz
+          kernel_opts: os/clonezilla.any.x86_64/vmlinuz
           append_opts: >-
-            initrd=os/clonezilla.any/initrd.img boot=live username=user
+            initrd=os/clonezilla.any.x86_64/initrd.img boot=live username=user
             union=overlay config components quiet noswap edd=on nomodeset
             nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general"
             ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt
-            fetch={{ pxe_sysprep_specs_platforms.bios.pxe_http_addr }}/os/clonezilla.any/filesystem.squashfs
+            fetch=VAR_PXE_HTTP_URL/os/clonezilla.any.x86_64/filesystem.squashfs
       efi64:
         state: present
         menu:
-          kernel_opts: os/clonezilla.any/vmlinuz
+          kernel_opts: os/clonezilla.any.x86_64/vmlinuz
           append_opts: >-
-            initrd=os/clonezilla.any/initrd.img boot=live username=user
+            initrd=os/clonezilla.any.x86_64/initrd.img boot=live username=user
             union=overlay config components quiet noswap edd=on nomodeset
             nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general"
             ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt
-            fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/clonezilla.any/filesystem.squashfs
-  gparted.any:
+            fetch=VAR_PXE_HTTP_URL/os/clonezilla.any.x86_64/filesystem.squashfs
+  gparted.any.x86_64:
     state: present
     type: tool
     label: launch gparted tools
@@ -111,272 +111,272 @@ pxe_sysprep_specs_os_images:
       bios:
         state: present
         menu:
-          kernel_opts: os/gparted.any/vmlinuz
+          kernel_opts: os/gparted.any.x86_64/vmlinuz
           append_opts: >-
-            initrd=os/gparted.any/initrd.img boot=live config components union=overlay
+            initrd=os/gparted.any.x86_64/initrd.img boot=live config components union=overlay
             username=user noswap noeject vga=791
-            fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/gparted.any/filesystem.squashfs
+            fetch=VAR_PXE_HTTP_URL/os/gparted.any.x86_64/filesystem.squashfs
       efi64:
         state: present
         menu:
-          kernel_opts: os/gparted.any/vmlinuz
+          kernel_opts: os/gparted.any.x86_64/vmlinuz
           append_opts: >-
-            initrd=os/gparted.any/initrd.img boot=live config components union=overlay
+            initrd=os/gparted.any.x86_64/initrd.img boot=live config components union=overlay
             username=user noswap noeject vga=791
-            fetch={{ pxe_sysprep_specs_platforms.efi64.pxe_http_addr }}/os/gparted.any/filesystem.squashfs
-  fedora.37:
+            fetch=VAR_PXE_HTTP_URL/os/gparted.any.x86_64/filesystem.squashfs
+  fedora.37.x86_64:
     state: present
     type: sysprep
-    label: install fedora 37
+    label: install fedora 37 x86_64
     platforms:
       bios:
         state: present
         mirror:
-          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/server/x86_64/os/
+          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
           # proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
-              part / --size 1 --grow --asprimary --fstype=var_server_fs_global --ondisk=var_server_disk
-          lvm-multi1:
+              part / --size 1 --grow --asprimary --fstype=VAR_SERVER_FS_GLOBAL --ondisk=VAR_SERVER_DISK
+          lvm1:
             state: present
             scheme: |-
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-root
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
-          lvm-multi2:
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-root
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
+          lvm2:
             state: present
             scheme: |-
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-root
-              logvol /usr --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-usr
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol /opt --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-opt
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-root
+              logvol /usr --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-usr
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol /opt --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-opt
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
         menu:
-          kernel_opts: os/fedora.37/vmlinuz
-          append_opts: initrd=os/fedora.37/initrd.img utf8 text
-          append_sysprep_server_opts: inst.ks=
+          kernel_opts: os/fedora.37.x86_64/vmlinuz
+          append_opts: initrd=os/fedora.37.x86_64/initrd.img utf8 text
+          append_sysprep_server_opts: inst.ks=VAR_SERVER_SYSPREP_FILE
       efi64:
         state: present
         mirror:
-          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/server/x86_64/os/
+          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
           # proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part / --size 1 --grow --asprimary --fstype=var_server_fs_global --ondisk=var_server_disk
-          lvm-multi1:
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part / --size 1 --grow --asprimary --fstype=VAR_SERVER_FS_GLOBAL --ondisk=VAR_SERVER_DISK
+          lvm1:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-root
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
-          lvm-multi2:
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-root
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
+          lvm2:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-root
-              logvol /usr --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-usr
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol /opt --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-opt
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-root
+              logvol /usr --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-usr
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol /opt --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-opt
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
         menu:
-          kernel_opts: os/fedora.37/vmlinuz
-          append_opts: initrd=os/fedora.37/initrd.img utf8 text
-          append_sysprep_server_opts: inst.ks=
-  fedora.38:
+          kernel_opts: os/fedora.37.x86_64/vmlinuz
+          append_opts: initrd=os/fedora.37.x86_64/initrd.img utf8 text
+          append_sysprep_server_opts: inst.ks=VAR_SERVER_SYSPREP_FILE
+  fedora.38.x86_64:
     state: present
     type: sysprep
-    label: install fedora 38
+    label: install fedora 38 x86_64
     platforms:
       bios:
         state: present
         mirror:
-          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/server/x86_64/os/
+          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
           # proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
-              part / --size 1 --grow --asprimary --fstype=var_server_fs_global --ondisk=var_server_disk
-          lvm-multi1:
+              part / --size 1 --grow --asprimary --fstype=VAR_SERVER_FS_GLOBAL --ondisk=VAR_SERVER_DISK
+          lvm1:
             state: present
             scheme: |-
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-root
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
-          lvm-multi2:
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-root
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
+          lvm2:
             state: present
             scheme: |-
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-root
-              logvol /usr --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-usr
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol /opt --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-opt
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-root
+              logvol /usr --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-usr
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol /opt --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-opt
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
         menu:
-          kernel_opts: os/fedora.38/vmlinuz
-          append_opts: initrd=os/fedora.38/initrd.img utf8 text
-          append_sysprep_server_opts: inst.ks=
+          kernel_opts: os/fedora.38.x86_64/vmlinuz
+          append_opts: initrd=os/fedora.38.x86_64/initrd.img utf8 text
+          append_sysprep_server_opts: inst.ks=VAR_SERVER_SYSPREP_FILE
       efi64:
         state: present
         mirror:
-          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/server/x86_64/os/
+          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
           # proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part / --size 1 --grow --asprimary --fstype=var_server_fs_global --ondisk=var_server_disk
-          lvm-multi1:
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part / --size 1 --grow --asprimary --fstype=VAR_SERVER_FS_GLOBAL --ondisk=VAR_SERVER_DISK
+          lvm1:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-root
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
-          lvm-multi2:
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-root
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
+          lvm2:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-root
-              logvol /usr --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-usr
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol /opt --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-opt
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-root
+              logvol /usr --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-usr
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol /opt --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-opt
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
         menu:
-          kernel_opts: os/fedora.38/vmlinuz
-          append_opts: initrd=os/fedora.38/initrd.img utf8 text
-          append_sysprep_server_opts: inst.ks=
-  fedora.39:
+          kernel_opts: os/fedora.38.x86_64/vmlinuz
+          append_opts: initrd=os/fedora.38.x86_64/initrd.img utf8 text
+          append_sysprep_server_opts: inst.ks=VAR_SERVER_SYSPREP_FILE
+  fedora.39.x86_64:
     state: present
     type: sysprep
-    label: install fedora 39
+    label: install fedora 39 x86_64
     platforms:
       bios:
         state: present
         mirror:
-          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/server/x86_64/os/
+          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
           # proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
-              part / --size 1 --grow --asprimary --fstype=var_server_fs_global --ondisk=var_server_disk
-          lvm-multi1:
+              part / --size 1 --grow --asprimary --fstype=VAR_SERVER_FS_GLOBAL --ondisk=VAR_SERVER_DISK
+          lvm1:
             state: present
             scheme: |-
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-root
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
-          lvm-multi2:
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-root
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
+          lvm2:
             state: present
             scheme: |-
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-root
-              logvol /usr --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-usr
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol /opt --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-opt
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-root
+              logvol /usr --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-usr
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol /opt --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-opt
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
         menu:
-          kernel_opts: os/fedora.39/vmlinuz
-          append_opts: initrd=os/fedora.39/initrd.img utf8 text
-          append_sysprep_server_opts: inst.ks=
+          kernel_opts: os/fedora.39.x86_64/vmlinuz
+          append_opts: initrd=os/fedora.39.x86_64/initrd.img utf8 text
+          append_sysprep_server_opts: inst.ks=VAR_SERVER_SYSPREP_FILE
       efi64:
         state: present
         mirror:
-          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/server/x86_64/os/
+          url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
           # proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part / --size 1 --grow --asprimary --fstype=var_server_fs_global --ondisk=var_server_disk
-          lvm-multi1:
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part / --size 1 --grow --asprimary --fstype=VAR_SERVER_FS_GLOBAL --ondisk=VAR_SERVER_DISK
+          lvm1:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-root
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
-          lvm-multi2:
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-root
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
+          lvm2:
             state: present
             scheme: |-
-              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=var_server_disk
-              part /boot --fstype=var_server_fs_boot --size=512 --ondisk=var_server_disk
-              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=var_server_disk
-              volgroup var_server_vgname --pesize=32768 pv.1
-              logvol / --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-root
-              logvol /usr --fstype var_server_fs_global --vgname var_server_vgname --size=4096 --name=lv-usr
-              logvol /var --fstype var_server_fs_global --vgname var_server_vgname --size=2048 --name=lv-var
-              logvol /home --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-home
-              logvol /tmp --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-tmp
-              logvol /opt --fstype var_server_fs_global --vgname var_server_vgname --size=1024 --name=lv-opt
-              logvol swap --vgname var_server_vgname --size=2048 --name=lv-swap
+              part /boot/efi --size 128 --asprimary --fstype=efi --fsoptions="umask=0777,shortname=winnt" --ondisk=VAR_SERVER_DISK
+              part /boot --fstype=VAR_SERVER_FS_BOOT --size=512 --ondisk=VAR_SERVER_DISK
+              part pv.1 --size 1 --grow --fstype=lvmpv --ondisk=VAR_SERVER_DISK
+              volgroup VAR_SERVER_VGNAME --pesize=32768 pv.1
+              logvol / --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-root
+              logvol /usr --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=4096 --name=lv-usr
+              logvol /var --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-var
+              logvol /home --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-home
+              logvol /tmp --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-tmp
+              logvol /opt --fstype VAR_SERVER_FS_GLOBAL --vgname VAR_SERVER_VGNAME --size=1024 --name=lv-opt
+              logvol swap --vgname VAR_SERVER_VGNAME --size=2048 --name=lv-swap
         menu:
-          kernel_opts: os/fedora.39/vmlinuz
-          append_opts: initrd=os/fedora.39/initrd.img utf8 text
-          append_sysprep_server_opts: inst.ks=
-  debian.buster:
+          kernel_opts: os/fedora.39.x86_64/vmlinuz
+          append_opts: initrd=os/fedora.39.x86_64/initrd.img utf8 text
+          append_sysprep_server_opts: inst.ks=VAR_SERVER_SYSPREP_FILE
+  debian.buster.x86_64:
     state: present
     type: sysprep
     label: install debian buster
@@ -384,97 +384,101 @@ pxe_sysprep_specs_os_images:
       bios:
         state: present
         mirror:
-          url: ftp.fr.debian.org
-          # proxy: ""
+          url: http://ftp.fr.debian.org
+          directory: /debian
+          proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
               d-i partman-auto/method string regular
               d-i partman-auto/expert_recipe string boot-root :: \
-              6144 50 -1 var_server_fs_global $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } .
-          lvm-multi1:
+              6144 50 -1 VAR_SERVER_FS_GLOBAL $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } .
+          lvm1:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
-          lvm-multi2:
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
+          lvm2:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-usr } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /usr } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-opt } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /opt } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-usr } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /usr } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-opt } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /opt } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
         menu:
-          kernel_opts: os/debian.buster/linux
-          append_opts: initrd=os/debian.buster/initrd.gz vga=788 auto=true
+          kernel_opts: os/debian.buster.x86_64/linux
+          append_opts: initrd=os/debian.buster.x86_64/initrd.gz vga=788 auto=true
+          append_sysprep_server_opts: hostname=VAR_SERVER_NAME domain=VAR_SERVER_DOMAIN url=VAR_SERVER_SYSPREP_FILE
       efi64:
         state: present
         mirror:
-          url: ftp.fr.debian.org
-          # proxy: ""
+          url: http://ftp.fr.debian.org
+          directory: /debian
+          proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
               d-i partman-auto/method string regular
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              6144 50 -1 var_server_fs_global $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } .
-          lvm-multi1:
+              6144 50 -1 VAR_SERVER_FS_GLOBAL $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } .
+          lvm1:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
-          lvm-multi2:
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
+          lvm2:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-usr } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /usr } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-opt } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /opt } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-usr } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /usr } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-opt } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /opt } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
         menu:
-          kernel_opts: os/debian.buster/linux
-          append_opts: initrd=os/debian.buster/initrd.gz vga=788 auto=true
-  debian.bullseye:
+          kernel_opts: os/debian.buster.x86_64/linux
+          append_opts: initrd=os/debian.buster.x86_64/initrd.gz vga=788 auto=true
+          append_sysprep_server_opts: hostname=VAR_SERVER_NAME domain=VAR_SERVER_DOMAIN url=VAR_SERVER_SYSPREP_FILE
+  debian.bullseye.x86_64:
     state: present
     type: sysprep
     label: install debian bullseye
@@ -482,97 +486,101 @@ pxe_sysprep_specs_os_images:
       bios:
         state: present
         mirror:
-          url: ftp.fr.debian.org
-          # proxy: ""
+          url: http://ftp.fr.debian.org
+          directory: /debian
+          proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
               d-i partman-auto/method string regular
               d-i partman-auto/expert_recipe string boot-root :: \
-              6144 50 -1 var_server_fs_global $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } .
-          lvm-multi1:
+              6144 50 -1 VAR_SERVER_FS_GLOBAL $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } .
+          lvm1:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
-          lvm-multi2:
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
+          lvm2:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-usr } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /usr } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-opt } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /opt } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-usr } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /usr } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-opt } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /opt } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
         menu:
-          kernel_opts: os/debian.bullseye/linux
-          append_opts: initrd=os/debian.bullseye/initrd.gz vga=788 auto=true
+          kernel_opts: os/debian.bullseye.x86_64/linux
+          append_opts: initrd=os/debian.bullseye.x86_64/initrd.gz vga=788 auto=true
+          append_sysprep_server_opts: hostname=VAR_SERVER_NAME domain=VAR_SERVER_DOMAIN url=VAR_SERVER_SYSPREP_FILE
       efi64:
         state: present
         mirror:
-          url: ftp.fr.debian.org
-          # proxy: ""
+          url: http://ftp.fr.debian.org
+          directory: /debian
+          proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
               d-i partman-auto/method string regular
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              6144 50 -1 var_server_fs_global $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } .
-          lvm-multi1:
+              6144 50 -1 VAR_SERVER_FS_GLOBAL $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } .
+          lvm1:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
-          lvm-multi2:
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
+          lvm2:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-usr } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /usr } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-opt } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /opt } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-usr } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /usr } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-opt } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /opt } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
         menu:
-          kernel_opts: os/debian.bullseye/linux
-          append_opts: initrd=os/debian.bullseye/initrd.gz vga=788 auto=true
-  debian.bookworm:
+          kernel_opts: os/debian.bullseye.x86_64/linux
+          append_opts: initrd=os/debian.bullseye.x86_64/initrd.gz vga=788 auto=true
+          append_sysprep_server_opts: hostname=VAR_SERVER_NAME domain=VAR_SERVER_DOMAIN url=VAR_SERVER_SYSPREP_FILE
+  debian.bookworm.x86_64:
     state: present
     type: sysprep
     label: install debian bookworm
@@ -580,164 +588,97 @@ pxe_sysprep_specs_os_images:
       bios:
         state: present
         mirror:
-          url: ftp.fr.debian.org
-          # proxy: ""
+          url: http://ftp.fr.debian.org
+          directory: /debian
+          proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
               d-i partman-auto/method string regular
               d-i partman-auto/expert_recipe string boot-root :: \
-              6144 50 -1 var_server_fs_global $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } .
-          lvm-multi1:
+              6144 50 -1 VAR_SERVER_FS_GLOBAL $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } .
+          lvm1:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
-          lvm-multi2:
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
+          lvm2:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-usr } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /usr } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-opt } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /opt } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-usr } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /usr } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-opt } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /opt } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
         menu:
-          kernel_opts: os/debian.bookworm/linux
-          append_opts: initrd=os/debian.bookworm/initrd.gz vga=788 auto=true
+          kernel_opts: os/debian.bookworm.x86_64/linux
+          append_opts: initrd=os/debian.bookworm.x86_64/initrd.gz vga=788 auto=true
+          append_sysprep_server_opts: hostname=VAR_SERVER_NAME domain=VAR_SERVER_DOMAIN url=VAR_SERVER_SYSPREP_FILE
       efi64:
         state: present
         mirror:
-          url: ftp.fr.debian.org
-          # proxy: ""
+          url: http://ftp.fr.debian.org
+          directory: /debian
+          proxy: ""
         partitionings:
-          nolvm-single:
+          atomic:
             state: present
             scheme: |-
               d-i partman-auto/method string regular
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              6144 50 -1 var_server_fs_global $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } .
-          lvm-multi1:
+              6144 50 -1 VAR_SERVER_FS_GLOBAL $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } .
+          lvm1:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
-          lvm-multi2:
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
+          lvm2:
             state: present
             scheme: |-
               d-i partman-auto/method string lvm
               d-i partman-auto-lvm/guided_size string 100%
-              d-i partman-auto-lvm/new_vg_name string var_server_vgname
+              d-i partman-auto-lvm/new_vg_name string VAR_SERVER_VGNAME
               d-i partman-auto/expert_recipe string boot-root :: \
               128 128 128 free $primary{ } $iflabel{ gpt } $reusemethod{ } method{ efi } format{ } . \
-              512 512 512 var_server_fs_boot $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_boot } mountpoint{ /boot } . \
-              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ var_server_vgname } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-root } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ / } . \
-              4096 4096 4096 var_server_fs_global $lvmok{ } $lv_name{ lv-usr } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /usr } . \
-              2048 2048 2048 var_server_fs_global $lvmok{ } $lv_name{ lv-var } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /var } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-home } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /home } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-tmp } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /tmp } . \
-              1024 1024 1024 var_server_fs_global $lvmok{ } $lv_name{ lv-opt } in_vg{ var_server_vgname } method{ format } format{ } use_filesystem{ } filesystem{ var_server_fs_global } mountpoint{ /opt } . \
-              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ var_server_vgname } method{ swap } format{ } .
+              512 512 512 VAR_SERVER_FS_BOOT $primary{ } $bootable{ } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_BOOT } mountpoint{ /boot } . \
+              6144 6144 6144 lvm $primary{ } method{ lvm } vg_name{ VAR_SERVER_VGNAME } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-root } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ / } . \
+              4096 4096 4096 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-usr } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /usr } . \
+              2048 2048 2048 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-var } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /var } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-home } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /home } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-tmp } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /tmp } . \
+              1024 1024 1024 VAR_SERVER_FS_GLOBAL $lvmok{ } $lv_name{ lv-opt } in_vg{ VAR_SERVER_VGNAME } method{ format } format{ } use_filesystem{ } filesystem{ VAR_SERVER_FS_GLOBAL } mountpoint{ /opt } . \
+              2048 2048 2048 linux-swap $lvmok{ } $lv_name{ lv-swap } in_vg{ VAR_SERVER_VGNAME } method{ swap } format{ } .
         menu:
-          kernel_opts: os/debian.bookworm/linux
-          append_opts: initrd=os/debian.bookworm/initrd.gz vga=788 auto=true
-
-
-
-
-
-
-
-
-
-pxe_deploy_configure_action: generate
-# pxe_deploy_configure_action: cleanup
-
-pxe_deploy_menu_folder: /srv/tftp/menu
-pxe_deploy_sysprep_folder: /srv/tftp/sysprep
-pxe_deploy_tftp_address: pxe.infra.ginhoux.net
-
-pxe_deploy_menu_default_files_bios:
-  - default
-  - default.entries
-  - default.theme
-  - splash.png
-pxe_deploy_menu_default_files_efi64:
-  - default
-  - default.entries
-  - default.theme
-  - splash.png
-
-# pxe_deploy_cleanup: false
-
-pxe_deploy:
-  - name: srv-swarm-manager1.infra.ginhoux.net
-    os: Fedora.37
-    partitionning: nolvm-single
-    filesystem: ext4
-    filesystem_boot: ext2
-    vgname: vg0
-    disk: sda
-    domain: infra.ginhoux.net
-    rootpwd: root
-    locale: en_US.UTF-8
-    kblayout: fr
-    timezone: Europe/Paris
-
-
-pxe_deploy_debian_stretch_mirror_hostname: ftp.fr.debian.org
-pxe_deploy_debian_stretch_mirror_directory: /debian
-pxe_deploy_debian_stretch_mirror_proxy: ""
-
-pxe_deploy_debian_buster_mirror_hostname: ftp.fr.debian.org
-pxe_deploy_debian_buster_mirror_directory: /debian
-pxe_deploy_debian_buster_mirror_proxy: ""
-
-pxe_deploy_debian_bullseye_mirror_hostname: ftp.fr.debian.org
-pxe_deploy_debian_bullseye_mirror_directory: /debian
-pxe_deploy_debian_bullseye_mirror_proxy: ""
-
-pxe_deploy_debian_bookworm_mirror_hostname: ftp.fr.debian.org
-pxe_deploy_debian_bookworm_mirror_directory: /debian
-pxe_deploy_debian_bookworm_mirror_proxy: ""
-
-pxe_deploy_centos_7_mirror_url: http://mirror.centos.org/centos-7/7/os/x86_64/
-pxe_deploy_centos_8_mirror_url: http://mirror.centos.org/centos-8/8/BaseOS/x86_64/os/
-
-pxe_deploy_fedora_32_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/32/Server/x86_64/os/
-pxe_deploy_fedora_33_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/33/Server/x86_64/os/
-pxe_deploy_fedora_34_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/34/Server/x86_64/os/
-pxe_deploy_fedora_35_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/35/Server/x86_64/os/
-pxe_deploy_fedora_36_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/36/Server/x86_64/os/
-pxe_deploy_fedora_37_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/37/Server/x86_64/os/
-pxe_deploy_fedora_38_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/38/Server/x86_64/os/
-pxe_deploy_fedora_39_mirror_url: https://ftp.lip6.fr/ftp/pub/linux/distributions/fedora/releases/39/Server/x86_64/os/
+          kernel_opts: os/debian.bookworm.x86_64/linux
+          append_opts: initrd=os/debian.bookworm.x86_64/initrd.gz vga=788 auto=true
+          append_sysprep_server_opts: hostname=VAR_SERVER_NAME domain=VAR_SERVER_DOMAIN url=VAR_SERVER_SYSPREP_FILE

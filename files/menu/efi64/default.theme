@@ -2,7 +2,7 @@ DEFAULT vesamenu.c32
 SERIAL 0 115200
 
 MENU vshift 8
-# MENU rows 18
+# MENU rows 32
 # MENU margin 8
 # MENU hidden
 # MENU helpmsgrow 15
