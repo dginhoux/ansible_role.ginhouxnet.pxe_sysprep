@@ -27,9 +27,9 @@ d-i netcfg/hostname string {{ server.name }}
 ### Mirror settings
 ################################################################################
 d-i mirror/country string manual
-d-i mirror/http/hostname string {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].url }}
-d-i mirror/http/proxy string {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].proxy }}
-d-i mirror/http/directory string {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].directory }}
+d-i mirror/http/hostname string {{ pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['mirror'].url }}
+d-i mirror/http/proxy string {{ pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['mirror'].proxy }}
+d-i mirror/http/directory string {{ pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['mirror'].directory }}
 
 ################################################################################
 ### Apt setup

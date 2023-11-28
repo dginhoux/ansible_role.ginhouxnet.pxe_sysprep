@@ -3,19 +3,19 @@
 - name: Define menu sysprep file url
   ansible.builtin.set_fact:
     menu_sysprep_file_url: >-
-      {{ pxe_sysprep_specs_platforms[platform.name].pxe_http_addr }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}_{{ partitioning }}.cfg
+      {{ pxe_sysprep_specs_bootmodes[bootmode.name].pxe_http_addr }}/{{ pxe_sysprep_specs_bootmodes[bootmode.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}_{{ partitioning }}.cfg
 
 
 - name: Define menu entry append options
   ansible.builtin.set_fact:
     menu_append_opts: >-
-      {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_opts }}
+      {{ pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['menu'].append_opts }}
 - name: Define menu entry append options
   when:
-    - pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts is defined
+    - pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['menu'].append_sysprep_server_opts is defined
   ansible.builtin.set_fact:
     menu_append_opts: >-
-      {{ menu_append_opts }} {{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['menu'].append_sysprep_server_opts }}
+      {{ menu_append_opts }} {{ pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['menu'].append_sysprep_server_opts }}
 - name: Define menu entry append options
   ansible.builtin.set_fact:
     menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_SERVER_SYSPREP_FILE', menu_sysprep_file_url) }}"
@@ -27,19 +27,19 @@
     menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_SERVER_DOMAIN', server.domain) }}"
 - name: Define menu entry append options
   ansible.builtin.set_fact:
-    menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_PXE_HTTP_URL', pxe_sysprep_specs_platforms[platform.name].pxe_http_addr) }}"
+    menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_PXE_HTTP_URL', pxe_sysprep_specs_bootmodes[bootmode.name].pxe_http_addr) }}"
       
 
 - name: Add menu entry list
   ansible.builtin.set_fact:
-    menu_entries: '{{ menu_entries + [ { "platform" : platform.name, "os" : os.name, "partitioning" : partitioning, "menu_append_opts" : menu_append_opts } ] }}'
+    menu_entries: '{{ menu_entries + [ { "bootmode" : bootmode.name, "os" : os.name, "partitioning" : partitioning, "menu_append_opts" : menu_append_opts } ] }}'
 
 
 - name: Generate partitioning scheme
   block:
     - name: Define partitioning scheme
       ansible.builtin.set_fact:
-        sysprep_part_scheme: "{{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['partitionings'][partitioning].scheme }}"
+        sysprep_part_scheme: "{{ pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['partitionings'][partitioning].scheme }}"
     - name: Define partitioning scheme
       ansible.builtin.set_fact:
         sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('VAR_SERVER_VGNAME', server.vgname) }}"
@@ -61,8 +61,8 @@
   when:
     - pxe_sysprep_specs_os_images[os.name].type == "sysprep"
   ansible.builtin.template:
-    src: "sysprep/{{ platform.name }}/sysprep-{{ os.name }}.cfg.j2"
-    dest: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_platforms[platform.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}_{{ partitioning }}.cfg"
+    src: "sysprep/{{ bootmode.name }}/sysprep-{{ os.name }}.cfg.j2"
+    dest: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_bootmodes[bootmode.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}_{{ partitioning }}.cfg"
     owner: root
     group: root
     mode: "0644"

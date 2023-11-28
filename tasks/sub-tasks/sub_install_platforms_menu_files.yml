@@ -1,10 +1,10 @@
 ---
 
 - name: Copy default pxe menu files
-  loop: "{{ pxe_sysprep_specs_platforms[platform].menu_files | flatten }}"
+  loop: "{{ pxe_sysprep_specs_bootmodes[bootmode].menu_files | flatten }}"
   ansible.builtin.copy:
-    src: "menu/{{ platform }}/{{ item }}"
-    dest: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_platforms[platform].menu_folder }}"
+    src: "menu/{{ bootmode }}/{{ item }}"
+    dest: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_bootmodes[bootmode].menu_folder }}"
     mode: "0644"
     owner: root
     group: root

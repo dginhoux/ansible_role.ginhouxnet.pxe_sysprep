@@ -3,7 +3,7 @@
 - name: Identify old menu for cleanup
   register: menu_files_to_delete
   ansible.builtin.find:
-    paths: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_platforms[platform].menu_folder }}"
+    paths: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_bootmodes[bootmode].menu_folder }}"
     patterns: "*.cfg"
     recurse: true
 

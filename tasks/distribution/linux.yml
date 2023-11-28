@@ -6,13 +6,13 @@
   block:
     - name: Include prepare tasks for defaults menu files
       when:
-        - pxe_sysprep_specs_platforms[platform].state == "present"
-      loop: "{{ pxe_sysprep_specs_platforms | flatten }}"
+        - pxe_sysprep_specs_bootmodes[bootmode].state == "present"
+      loop: "{{ pxe_sysprep_specs_bootmodes | flatten }}"
       loop_control:
-        loop_var: platform
-        label: "platform: {{ platform }}"
+        loop_var: bootmode
+        label: "bootmode: {{ bootmode }}"
       ansible.builtin.include_tasks:
-        file: "sub-tasks/sub_install_platforms_menu_files.yml"
+        file: "sub-tasks/sub_install_bootmodes_menu_files.yml"
 
     - name: Include sysprep tasks for servers
       when:
@@ -32,18 +32,18 @@
   block:
     - name: Include cleanup tasks for menu files
       when:
-        - pxe_sysprep_specs_platforms[platform].state == "present"
-      loop: "{{ pxe_sysprep_specs_platforms | flatten }}"
+        - pxe_sysprep_specs_bootmodes[bootmode].state == "present"
+      loop: "{{ pxe_sysprep_specs_bootmodes | flatten }}"
       loop_control:
-        loop_var: platform
-        label: "platform: {{ platform }}"
+        loop_var: bootmode
+        label: "bootmode: {{ bootmode }}"
       ansible.builtin.include_tasks:
         file: "sub-tasks/sub_cleanup_menu_files.yml"
 
     - name: Include cleanup tasks for sysprep files
-      loop: "{{ pxe_sysprep_specs_platforms | flatten }}"
+      loop: "{{ pxe_sysprep_specs_bootmodes | flatten }}"
       loop_control:
-        loop_var: platform
-        label: "platform: {{ platform }}"
+        loop_var: bootmode
+        label: "bootmode: {{ bootmode }}"
       ansible.builtin.include_tasks:
         file: "sub-tasks/sub_cleanup_sysprep_files.yml"

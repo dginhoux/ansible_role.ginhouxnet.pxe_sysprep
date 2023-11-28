@@ -21,46 +21,47 @@ pxe_sysprep_generate_servers_list:
     os_images_list:
       - name: fedora.37.x86_64
         state: present
-        platforms:
+        bootmodes:
           - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
           - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
       - name: fedora.38.x86_64
         state: present
-        platforms:
+        bootmodes:
           - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
           - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
       - name: fedora.39.x86_64
         state: present
-        platforms:
+        bootmodes:
           - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
           - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
       - name: debian.buster.x86_64
         state: present
-        platforms:
+        bootmodes:
           - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
           - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
       - name: debian.bookworm.x86_64
         state: present
-        platforms:
+        bootmodes:
           - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
           - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
       - name: debian.bullseye.x86_64
         state: present
-        platforms:
+        bootmodes:
           - { name: bios, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
           - { name: efi64, state: present, partitionings: { "atomic", "lvm1", "lvm2" } }
       - name: clonezilla.any.x86_64
         state: present
-        platforms:
+        bootmodes:
           - { name: bios, state: present }
           - { name: efi64, state: present }
       - name: gparted.any.x86_64
         state: present
-        platforms:
+        bootmodes:
           - { name: bios, state: present }
           - { name: efi64, state: present }
 
-pxe_sysprep_specs_platforms:
+
+pxe_sysprep_specs_bootmodes:
   bios:
     state: present
     # pxe_tftp_addr: pxe.infra.ginhoux.net
@@ -82,7 +83,7 @@ pxe_sysprep_specs_os_images:
     state: present
     type: tool
     label: launch clonezilla tools
-    platforms:
+    bootmodes:
       bios:
         state: present
         menu:
@@ -107,7 +108,7 @@ pxe_sysprep_specs_os_images:
     state: present
     type: tool
     label: launch gparted tools
-    platforms:
+    bootmodes:
       bios:
         state: present
         menu:
@@ -128,7 +129,7 @@ pxe_sysprep_specs_os_images:
     state: present
     type: sysprep
     label: install fedora 37 x86_64
-    platforms:
+    bootmodes:
       bios:
         state: present
         mirror:
@@ -212,7 +213,7 @@ pxe_sysprep_specs_os_images:
     state: present
     type: sysprep
     label: install fedora 38 x86_64
-    platforms:
+    bootmodes:
       bios:
         state: present
         mirror:
@@ -296,7 +297,7 @@ pxe_sysprep_specs_os_images:
     state: present
     type: sysprep
     label: install fedora 39 x86_64
-    platforms:
+    bootmodes:
       bios:
         state: present
         mirror:
@@ -380,7 +381,7 @@ pxe_sysprep_specs_os_images:
     state: present
     type: sysprep
     label: install debian buster
-    platforms:
+    bootmodes:
       bios:
         state: present
         mirror:
@@ -482,7 +483,7 @@ pxe_sysprep_specs_os_images:
     state: present
     type: sysprep
     label: install debian bullseye
-    platforms:
+    bootmodes:
       bios:
         state: present
         mirror:
@@ -584,7 +585,7 @@ pxe_sysprep_specs_os_images:
     state: present
     type: sysprep
     label: install debian bookworm
-    platforms:
+    bootmodes:
       bios:
         state: present
         mirror:

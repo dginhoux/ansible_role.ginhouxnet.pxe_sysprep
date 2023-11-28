@@ -4,9 +4,9 @@ INCLUDE pxelinux.cfg/default.entries
 MENU SEPARATOR
 
 {% for entry in menu_entries -%}
-{% if entry.platform == platform -%}
+{% if entry.bootmode == bootmode -%}
 LABEL {{ pxe_sysprep_specs_os_images[entry.os].label }}{% if entry.partitioning is defined %} [partitioning:{{ entry.partitioning }}]{% endif %}
-  KERNEL {{ pxe_sysprep_specs_os_images[entry.os]['platforms'][platform]['menu'].kernel_opts }}
+  KERNEL {{ pxe_sysprep_specs_os_images[entry.os]['bootmodes'][bootmode]['menu'].kernel_opts }}
   APPEND {{ entry.menu_append_opts }}
 {% endif -%}
 {% endfor -%}

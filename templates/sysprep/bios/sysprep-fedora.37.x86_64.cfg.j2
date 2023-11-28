@@ -1,7 +1,7 @@
 ################################################################################
 ### Mirror settings
 ################################################################################
-url --url={{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].url }} {% if pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].proxy is defined %}--proxy={{ pxe_sysprep_specs_os_images[os.name]['platforms'][platform.name]['mirror'].proxy }}{% endif %}
+url --url={{ pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['mirror'].url }} {% if pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['mirror'].proxy is defined %}--proxy={{ pxe_sysprep_specs_os_images[os.name]['bootmodes'][bootmode.name]['mirror'].proxy }}{% endif %}
 
 ################################################################################
 ### Account setup
