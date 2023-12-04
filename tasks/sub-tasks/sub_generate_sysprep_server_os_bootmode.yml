@@ -1,6 +1,6 @@
 ---
 
-- name: Include sysprep tasks for server/os/bootmode/partitioning
+- name: "Include tasks for sysprep [server: {{ server.name }}, os: {{ os.name }}, bootmode: {{ bootmode.name }}, partitioning: {{ partitioning }}]"
   when:
     - partitioning is defined
     - partitioning is iterable
@@ -18,7 +18,7 @@
     file: "sub-tasks/sub_generate_sysprep_server_os_bootmode_partitioning.yml"
 
 
-- name: Tasks for server/os/bootmode without partitionings
+- name: "Include tasks for sysprep [server: {{ server.name }}, os: {{ os.name }}, bootmode: {{ bootmode.name }}]"
   when:
     - bootmode.partitionings is not defined
   block:
@@ -26,7 +26,6 @@
       ansible.builtin.set_fact:
         menu_sysprep_file_url: >-
           {{ pxe_sysprep_specs_bootmodes[bootmode.name].pxe_http_addr }}/{{ pxe_sysprep_specs_bootmodes[bootmode.name].sysprep_folder }}/{{ server.name }}_{{ os.name }}.cfg
-
 
 
     - name: Define menu entry append options

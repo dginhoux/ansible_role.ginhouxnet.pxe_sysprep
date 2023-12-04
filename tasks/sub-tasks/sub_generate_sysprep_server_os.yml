@@ -1,9 +1,7 @@
 ---
 
-- name: Include sysprep tasks for server/os/bootmode
+- name: "Include tasks for sysprep [server: {{ server.name }}, os: {{ os.name }}, bootmode: {{ bootmode.name }}]"
   when:
-    - os.state is defined
-    - os.state == "present"
     - os.bootmodes is defined
     - os.bootmodes is iterable
     - os.bootmodes | length > 0

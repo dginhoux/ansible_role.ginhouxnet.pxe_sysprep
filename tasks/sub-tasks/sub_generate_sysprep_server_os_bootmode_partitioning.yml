@@ -54,9 +54,6 @@
         sysprep_part_scheme: "{{ sysprep_part_scheme | regex_replace('VAR_SERVER_DISK', server.disk) }}"
 
 
-# - debug: var=sysprep_part_scheme
-
-
 - name: Generate sysprep file
   when:
     - pxe_sysprep_specs_os_images[os.name].type == "sysprep"
@@ -67,5 +64,3 @@
     group: root
     mode: "0644"
     trim_blocks: false
-    # variable_start_string: "((##"
-    # variable_end_string: "##))"

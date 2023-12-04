@@ -3,13 +3,10 @@
 - name: Prepare menu entries list
   ansible.builtin.set_fact:
     menu_entries: []
-    # menu_entries_tools_tmp: []
 
 
-- name: Include sysprep tasks for server/os
+- name: "Include tasks for sysprep [server: {{ server.name }}, os: {{ os.name }}]"
   when:
-    - server.state is defined
-    - server.state == "present"
     - server.os_images_list is defined
     - server.os_images_list is iterable
     - server.os_images_list | length > 0
@@ -17,7 +14,6 @@
     - os.state == "present"
     - pxe_sysprep_specs_os_images[os.name] is defined
     - pxe_sysprep_specs_os_images[os.name].state == "present"
-    # - pxe_sysprep_specs_os_images[os.name].type == "sysprep"
   loop: "{{ server.os_images_list | flatten }}"
   loop_control:
     loop_var: os
@@ -26,37 +22,30 @@
     file: "sub-tasks/sub_generate_sysprep_server_os.yml"
 
 
-- name: Extract menu bootmodes list
+- name: "Generate menu files [server: {{ server.name }}]"
   when:
     - menu_entries is defined
     - menu_entries is iterable
     - menu_entries | length > 0
-  ansible.builtin.set_fact:
-    menu_bootmodes: "{{ menu_entries | map(attribute='bootmode') | list | unique }}"
+  block:
+    - name: "Extract menu bootmodes list [server: {{ server.name }}]"
+      ansible.builtin.set_fact:
+        menu_bootmodes: "{{ menu_entries | map(attribute='bootmode') | list | unique }}"
 
-
-# - debug: var=menu_entries
-
-
-- name: Generate menu files
-  when:
-    - menu_entries is defined
-    - menu_entries is iterable
-    - menu_entries | length > 0
-    - menu_bootmodes is defined
-    - menu_bootmodes is iterable
-    - menu_bootmodes | length > 0
-  loop: "{{ menu_bootmodes | flatten }}"
-  loop_control:
-    loop_var: bootmode
-    label: "server: {{ server.name }}, bootmode: {{ bootmode }}"
-  ansible.builtin.template:
-    src: "menu/{{ bootmode }}/menu.cfg.j2"
-    dest: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_bootmodes[bootmode].menu_folder }}/{{ server.name }}.cfg"
-    owner: root
-    group: root
-    mode: "0644"
-    trim_blocks: false
-    # variable_start_string: "((##"
-    # variable_end_string: "##))"
+    - name: "Generate menu files [server: {{ server.name }}]"
+      when:
+        - menu_bootmodes is defined
+        - menu_bootmodes is iterable
+        - menu_bootmodes | length > 0
+      loop: "{{ menu_bootmodes | flatten }}"
+      loop_control:
+        loop_var: bootmode
+        label: "server: {{ server.name }}, bootmode: {{ bootmode }}"
+      ansible.builtin.template:
+        src: "menu/{{ bootmode }}/menu.cfg.j2"
+        dest: "{{ pxe_sysprep_root_folder }}/{{ pxe_sysprep_specs_bootmodes[bootmode].menu_folder }}/{{ server.name }}.cfg"
+        owner: root
+        group: root
+        mode: "0644"
+        trim_blocks: false
 
