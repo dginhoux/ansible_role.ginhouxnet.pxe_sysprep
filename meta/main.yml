@@ -6,24 +6,19 @@ galaxy_info:
   company: dginhoux
   license: MIT
   min_ansible_version: "2.13"
-  bootmodes:
+  platforms:
     - name: Debian
       versions:
-        - buster
-        - bullseye
-        - bookworm
-    - name: Fedora
-      versions:
-        - "33"
-        - "34"
-        - "35"
-        - "36"
-        - "37"
-        - "38"
+        - all
     - name: EL
       versions:
-        - "7"
-        - "8"
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
   galaxy_tags:
     - pxe
     - sysprep
