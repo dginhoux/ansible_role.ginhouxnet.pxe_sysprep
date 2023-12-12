@@ -4,6 +4,36 @@
   when:
     - pxe_deploy_configure_action == "generate"
   block:
+    - name: Set server list
+      when:
+        - pxe_sysprep_generate_servers_list is defined
+        - pxe_sysprep_generate_servers_list is iterable
+        - pxe_sysprep_generate_servers_limit_list is not defined or pxe_sysprep_generate_servers_limit_list | length == 0
+      ansible.builtin.set_fact:
+        pxe_sysprep_generate_servers_list2: "{{ pxe_sysprep_generate_servers_list }}"
+
+
+    - name: Set new server with selected list
+      when:
+        - pxe_sysprep_generate_servers_list is defined
+        - pxe_sysprep_generate_servers_list is iterable
+        - pxe_sysprep_generate_servers_limit_list is defined
+        - pxe_sysprep_generate_servers_limit_list | length > 0
+      block:
+        - name: Set new (empty) server list with selected list
+          ansible.builtin.set_fact:
+            pxe_sysprep_generate_servers_list2: []
+        - name: Set new server list with selected list
+          when:
+            - server.name in pxe_sysprep_generate_servers_limit_list
+          loop: "{{ pxe_sysprep_generate_servers_list | flatten }}"
+          loop_control:
+            loop_var: server
+            label: "server: {{ server.name }}"
+          ansible.builtin.set_fact:
+            pxe_sysprep_generate_servers_list2: "{{ pxe_sysprep_generate_servers_list2 + [ server ] }}"
+
+
     - name: Include tasks for install defaults menu files
       when:
         - pxe_sysprep_specs_bootmodes[bootmode].state == "present"
@@ -18,7 +48,7 @@
       when:
         - server.state is defined
         - server.state == "present"
-      loop: "{{ pxe_sysprep_generate_servers_list | flatten }}"
+      loop: "{{ pxe_sysprep_generate_servers_list2 | flatten }}"
       loop_control:
         loop_var: server
         label: "server: {{ server.name }}"

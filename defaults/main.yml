@@ -6,6 +6,11 @@ pxe_sysprep_configure_action: generate
 pxe_sysprep_root_folder: /srv/tftp
 
 
+## this list can be used at playbooks level to only run specified server
+## usefull for oneshot
+pxe_sysprep_generate_servers_limit_list: []
+
+
 pxe_sysprep_generate_servers_list:
   - name: srv-swarm-manager1.infra.ginhoux.net
     state: present
