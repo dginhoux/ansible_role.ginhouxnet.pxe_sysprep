@@ -31,7 +31,7 @@
             loop_var: server
             label: "server: {{ server.name }}"
           ansible.builtin.set_fact:
-            pxe_sysprep_generate_servers_list2: "{{ pxe_sysprep_generate_servers_list2 + [ server ] }}"
+            pxe_sysprep_generate_servers_list2: "{{ pxe_sysprep_generate_servers_list2 + [server] }}"
 
 
     - name: Include tasks for install defaults menu files

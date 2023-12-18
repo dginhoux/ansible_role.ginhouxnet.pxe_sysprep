@@ -28,11 +28,11 @@
 - name: Define menu entry append options
   ansible.builtin.set_fact:
     menu_append_opts: "{{ menu_append_opts | regex_replace('VAR_PXE_HTTP_URL', pxe_sysprep_specs_bootmodes[bootmode.name].pxe_http_addr) }}"
-      
+
 
 - name: Add menu entry list
   ansible.builtin.set_fact:
-    menu_entries: '{{ menu_entries + [ { "bootmode" : bootmode.name, "os" : os.name, "partitioning" : partitioning, "menu_append_opts" : menu_append_opts } ] }}'
+    menu_entries: '{{ menu_entries + [{ "bootmode" : bootmode.name, "os" : os.name, "partitioning" : partitioning, "menu_append_opts" : menu_append_opts }] }}'
 
 
 - name: Generate partitioning scheme
